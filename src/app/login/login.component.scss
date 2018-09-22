@@ -1,0 +1,84 @@
+.c-login {
+  width: 400px;
+  margin: 0px auto;
+  &__header {
+    text-align: center;
+    margin-bottom: 20px;
+    h3 {
+      line-height: 28px;
+      font-weight: normal;
+    }
+  }
+  &__content {
+    background: #fff;
+    height: 150px;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .07);
+    padding: 15px;
+  }
+  &__button {
+    border: 0;
+    padding: 8px 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: #d61360; /* Old browsers */
+background: -moz-linear-gradient(left, #d61360 1%, #48aad9 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, #d61360 1%,#48aad9 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, #d61360 1%,#48aad9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', endColorstr='#48aad9',GradientType=1 ); /* IE6-9 */
+    letter-spacing: 2px;
+    border-radius: 0px 0px 4px 0px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    color: #fff;
+  }  
+}
+
+.c-input {
+  width: 100%;  
+  position: relative;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  &-blue {
+    border: 1px solid #4ca5d5;
+  }
+  &-green {
+    border: 1px solid #9DBB50;  
+  }
+  &__label {
+    position: absolute;
+    padding: 10px 15px 9px 35px;
+    display: inline-block;
+    font-size: 14px;
+    color: #fff;
+    width: 140px;
+    font-weight: bold;
+    z-index: 1;
+    &:before {
+      position: absolute;
+      font-family: FontAwesome;
+      left: 15px;
+      font-weight: normal;
+    }
+    &-emp {
+      background: #4ca5d5;
+      &:before {
+        content: "\f007";
+      }
+    }
+    &-pwd {
+      background: #9DBB50;
+      &:before {
+        content: "\f09c";
+      }
+    }
+  }
+  &__input {
+    width: 100%;
+    padding: 10px 10px 10px 150px;
+    border: 0px;
+    border-radius: 4px;
+  }
+}

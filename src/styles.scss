@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body, html {
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  background: #e7e7e7;
+  // url("https://www.toptal.com/designers/subtlepatterns/patterns/connect.png")
+  margin-bottom: 65px; /* Margin bottom by footer height */
+}
+
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.container {
+  width: 1200px;
+  margin: 0px auto;
+}
+
+.content {
+  margin-top: 55px;
+}
