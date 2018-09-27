@@ -42,6 +42,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', end
   }
 }
 
-.content {
-  margin-top: 55px;
+@media only screen and (max-width: 640px) {
+  .header {    
+    &__brand{
+      width: 100%;
+      height: auto;
+      padding: 5px 5px;
+      img {
+        height: 35px;
+        padding-right: 10px;
+      }
+      h3 {
+        line-height: 35px;
+        margin-left: 10px;
+        font-size: 14px;
+      }
+    }
+  }
 }
