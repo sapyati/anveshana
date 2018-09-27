@@ -35,7 +35,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', end
     color: #fff;
   }  
 }
-
 .c-input {
   width: 100%;  
   position: relative;
@@ -80,5 +79,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', end
     padding: 10px 10px 10px 150px;
     border: 0px;
     border-radius: 4px;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .c-login {
+    width: 100%;
+    &__header {
+      margin-bottom: 15px;
+      h3 {
+        font-size: 16px;
+        line-height: 22px;
+      }
+    }
+    &__content {
+      height: 140px;
+      padding: 10px;
+    }
   }
 }
