@@ -1,0 +1,44 @@
+{
+	"ConferenceRooms": [{
+			"roomName": "Memphis",
+			"title": "example glossary",
+			"data": [{
+				"name": "Madhuri",
+				"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
+			}],
+			"details": "AC 4 PC"
+		},
+		{
+			"roomName": "Colorado",
+			"title": "example glossary",
+			"data": [{
+					"name": "Madhuri",
+					"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
+				},
+				{
+					"name": "Kiran",
+					"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
+				}
+			],
+			"details": "AC 4 PC"
+		},
+		{
+			"roomName": "Mumbai",
+			"title": "example glossary",
+			"data": [{
+				"name": "Madhuri",
+				"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
+			}],
+			"details": "AC 4 PC"
+		},
+		{
+			"roomName": "Paris",
+			"title": "example glossary",
+			"data": [{
+				"name": "Madhuri",
+				"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
+			}],
+			"details": "AC 4 PC"
+		}
+	]
+}

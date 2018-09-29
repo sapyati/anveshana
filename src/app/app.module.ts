@@ -1,15 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {RouterModule, Routes}  from '@angular/router'; 
+import {RouterModule, Routes} from '@angular/router';
+import { RoomsListService } from './rooms-list.service';
 
-const appRoutes : Routes = [
+const appRoutes: Routes = [
   {
     path: '',
     component: LoginComponent
@@ -18,7 +19,7 @@ const appRoutes : Routes = [
     path : 'dashboard',
     component : DashboardComponent
   }
-]
+];
 
 @NgModule({
   declarations: [
@@ -32,9 +33,10 @@ const appRoutes : Routes = [
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ RoomsListService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
