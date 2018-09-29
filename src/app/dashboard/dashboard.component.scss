@@ -1,0 +1,46 @@
+.grid {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(3, 1fr );
+  padding: 10px;
+}
+
+.grid__item {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .07);
+  padding: 15px;
+  line-height: 25px;
+  &-selectedRoom {
+    h3.room-name {
+      color:#41A7D8;
+      text-transform: uppercase;
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #41A7D8;
+      margin-bottom: 15px;
+      small {
+        font-size: 16px;
+        text-transform: capitalize;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 320px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+.booked-by {
+  padding: 5px;
+  background: #BAE1FF;
+  margin-bottom: 15px;
+  line-height: 25px;
+}
