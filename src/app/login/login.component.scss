@@ -1,100 +1,99 @@
-.c-login {
-  width: 400px;
-  margin: 0px auto;
-  &__header {
-    text-align: center;
-    margin-bottom: 20px;
-    h3 {
-      line-height: 28px;
-      font-weight: normal;
-    }
-  }
-  &__content {
-    background: #fff;
-    height: 150px;
-    position: relative;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .07);
-    padding: 15px;
-  }
-  &__button {
-    border: 0;
-    padding: 8px 15px;
-    text-transform: uppercase;
-    font-weight: 700;
-    background: #d61360; /* Old browsers */
-background: -moz-linear-gradient(left, #d61360 1%, #48aad9 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left, #d61360 1%,#48aad9 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right, #d61360 1%,#48aad9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', endColorstr='#48aad9',GradientType=1 ); /* IE6-9 */
-    letter-spacing: 2px;
-    border-radius: 0px 0px 4px 0px;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    color: #fff;
-  }  
-}
-.c-input {
-  width: 100%;  
-  position: relative;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  &-blue {
-    border: 1px solid #4ca5d5;
-  }
-  &-green {
-    border: 1px solid #9DBB50;  
-  }
-  &__label {
-    position: absolute;
-    padding: 10px 15px 9px 35px;
-    display: inline-block;
-    font-size: 14px;
-    color: #fff;
-    width: 140px;
-    font-weight: bold;
-    z-index: 1;
-    &:before {
-      position: absolute;
-      font-family: FontAwesome;
-      left: 15px;
-      font-weight: normal;
-    }
-    &-emp {
-      background: #4ca5d5;
-      &:before {
-        content: "\f007";
-      }
-    }
-    &-pwd {
-      background: #9DBB50;
-      &:before {
-        content: "\f09c";
-      }
-    }
-  }
-  &__input {
-    width: 100%;
-    padding: 10px 10px 10px 150px;
-    border: 0px;
-    border-radius: 4px;
-  }
+
+
+form {
+  background: #3e3e3e;
+  padding: 1px 68px;
+  text-align: left;
+  box-shadow: 4px 3px 3px #030202;
+  width: 75%;
+  height: 480px;
 }
 
-@media only screen and (max-width: 640px) {
-  .c-login {
-    width: 100%;
-    &__header {
-      margin-bottom: 15px;
-      h3 {
-        font-size: 16px;
-        line-height: 22px;
-      }
-    }
-    &__content {
-      height: 140px;
-      padding: 10px;
-    }
-  }
+label {
+  display: block;
+  position: relative;
+  margin: 40px 0px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: none;
+  outline: none;
+}
+
+.line-box {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: #BCBCBC;
+}
+
+.line {
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #8BC34A;
+  transition: ease .6s;
+}
+
+input:focus + .line-box .line {
+  width: 100%;
+}
+
+.label-txt {
+  position: absolute;
+  top: -1.6em;
+  padding: 10px;
+  font-family: sans-serif;
+  font-size: .8em;
+  letter-spacing: 1px;
+  color: rgb(120,120,120);
+  transition: ease .3s;
+}
+
+.label-active {
+  top: -3em;
+}
+
+button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgb(220,220,220);
+  font-weight: bold;
+  color: rgb(120,120,120);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: ease .3s;
+}
+
+button:hover {
+  background: #8BC34A;
+  color: #ffffff;
+}
+.comp_name{
+  font-size: 3.3em;
+  letter-spacing: 3px;
+  background: -webkit-linear-gradient(#fff, #9fffb2);
+  -webkit-background-clip: text;
+  color: #d4ffbf;
+  -webkit-text-fill-color: transparent;
+  font-family: serif;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;}
+.btn-sabha-login{
+  color: #fff;
+  background-image: linear-gradient(#c2237c, #64b6e0);
+font-size: 1.5em;
+text-transform: capitalize;
+letter-spacing: 4px;
+  font-weight: bold;
+background-color: #a2cd4d;
+border-radius: 0px;
 }

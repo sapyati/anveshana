@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
   loginUser(e){
     e.preventDefault();
     console.log(e);
-var username = e.target.elements[0].value;
-var password = e.target.elements[1].value;
-if(username == "admin" && password == "password"){
-this.router.navigate(['dashboard']);
-}
+    var username = e.target.elements[0].value;
+    var password = e.target.elements[1].value;
+    if(username == "admin" && password == "password"){
+    this.router.navigate(['dashboard']);
+    }
   }
 
 }

@@ -15,12 +15,6 @@ body, html {
   font-family: 'Raleway', sans-serif;
 }
 
-body {
-  background: #e7e7e7;
-  // url("https://www.toptal.com/designers/subtlepatterns/patterns/connect.png")
-  margin-bottom: 65px; /* Margin bottom by footer height */
-}
-
 .clearfix:after {
    content: " "; /* Older browser do not support empty content */
    visibility: hidden;
@@ -30,10 +24,14 @@ body {
 }
 
 .container {
-  width: 1200px;
   margin: 0px auto;
 }
-
+body{
+  background-image: url('assets/images/Small-meeting-rooms-design.png');
+  padding-top: 5px;
+  width: 100%;
+  height: auto;
+}
 .content {
   margin-top: 55px;
 }
