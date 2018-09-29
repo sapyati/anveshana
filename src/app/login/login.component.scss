@@ -1,4 +1,65 @@
 
+.header {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  padding: 5px 0px;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d61360+1,48aad9+100 */
+    background: #d61360; /* Old browsers */
+    background: -moz-linear-gradient(left, #d61360 1%, #48aad9 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #d61360 1%,#48aad9 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #d61360 1%,#48aad9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', endColorstr='#48aad9',GradientType=1 ); /* IE6-9 */
+    bottom: -5px;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  }
+  &__brand{
+    width: 100%;
+    height: 50px;
+    padding: 5px 0px;
+    float: left;
+    img {
+      height: 61px;
+      padding-right: 0px;
+      border-left: 0px;
+      float: left;
+    }
+    h3 {
+      margin: 0.4% 12%;
+      padding: 0px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .header {
+    &__brand{
+      width: 100%;
+      height: auto;
+      padding: 5px 5px;
+      img {
+        height: 35px;
+        padding-right: 10px;
+      }
+      h3 {
+        line-height: 35px;
+        margin-left: 10px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+
+
 
 form {
   background: #3e3e3e;
@@ -14,6 +75,10 @@ label {
   position: relative;
   margin: 40px 0px;
 }
+.back-log{background-image: url('../../assets/images/Small-meeting-rooms-design.png');
+padding-top: 5px;
+width: 100%;
+          height: 695px;}
 input {
   width: 100%;
   padding: 10px;
