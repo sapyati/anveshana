@@ -1,10 +1,16 @@
 <!-- dashboard component -->
 <div class="content">
+  <div class="container clearfix">
+    <div class="header__brand">
+      <img src="https://appaccess.mphasis.com/images/Mphasis_Login.png" alt="">
+
+    </div>
+  </div><br/>
   <div class="container">
-    <div class="grid">
-      <div class="grid__item" *ngIf="rooms">
+    <div class="grid col-md-12">
+      <div class="col-md-12 grid__item" *ngIf="rooms">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-          y="0px" width="421.8px" height="493.3px" viewBox="0 0 421.8 493.3" style="enable-background:new 0 0 421.8 493.3;"
+          y="0px" width="421.8px" height="493.4px" viewBox="0 0 421.8 493.3" style="enable-background:new 0 0 421.8 493.3;"
           xml:space="preserve">
           <style type="text/css">
             .st-grey {
@@ -110,7 +116,7 @@
           </g>
         </svg>
       </div>
-      <div class="grid__item grid__item-selectedRoom" *ngIf="selectedRoom">
+      <div class="grid__item grid__item-selectedRoom " *ngIf="selectedRoom">
         <h3 class="room-name">{{selectedRoom.roomName}} - <small>{{selectedRoom.roomStatus}}</small></h3>
         <div class="booked-by" *ngFor="let booking of selectedRoom.roomBookings">
           <h3>{{booking.meetingName}}</h3>
@@ -121,7 +127,7 @@
         <p><strong>Room Capacity</strong> : {{selectedRoom.roomCapacity}}</p>
         <p><strong>Room Facilities</strong> : <br>{{selectedRoom.roomFacilities}}</p>
       </div>
-      <div class="grid__item" *ngIf="selectedRoom">
+      <div class="grid__item " *ngIf="selectedRoom">
         sdfasd
       </div>
     </div>

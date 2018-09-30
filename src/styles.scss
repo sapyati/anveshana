@@ -13,6 +13,7 @@ html {
 
 body, html {
   font-family: 'Raleway', sans-serif;
+  background: #3e3e3e;
 }
 
 .clearfix:after {
@@ -25,12 +26,13 @@ body, html {
 
 .container {
   margin: 0px auto;
+  width:88%;
 }
 body{
 
 }
 .content {
-  margin-top: 55px;
+  margin-top: 10px;
 }
 
 @media only screen and (max-width: 640px) {
