@@ -13,7 +13,7 @@ export class RoomsListService {
   constructor(private http: HttpClient) { }
 
   getRooms(): Observable<any> {
-    const apiURL = 'https://api.myjson.com/bins/nc200';
+    const apiURL = 'http://localhost:3000/conferenceRooms';
     return this.http.get(apiURL)
       .pipe(
         tap(rooms => console.log('fetched heroes')),
@@ -36,3 +36,4 @@ export class RoomsListService {
   }
 
 }
+
