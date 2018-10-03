@@ -1,44 +1,83 @@
 {
-	"ConferenceRooms": [{
-			"roomName": "Memphis",
-			"title": "example glossary",
-			"data": [{
-				"name": "Madhuri",
-				"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
-			}],
-			"details": "AC 4 PC"
-		},
-		{
-			"roomName": "Colorado",
-			"title": "example glossary",
-			"data": [{
-					"name": "Madhuri",
-					"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
-				},
-				{
-					"name": "Kiran",
-					"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
-				}
-			],
-			"details": "AC 4 PC"
-		},
-		{
-			"roomName": "Mumbai",
-			"title": "example glossary",
-			"data": [{
-				"name": "Madhuri",
-				"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
-			}],
-			"details": "AC 4 PC"
-		},
-		{
-			"roomName": "Paris",
-			"title": "example glossary",
-			"data": [{
-				"name": "Madhuri",
-				"time": "2018 - 09 - 24 T11: 16: 57.700 Z"
-			}],
-			"details": "AC 4 PC"
-		}
-	]
+	"conferenceRooms": [{
+		"roomName": "Memphis",
+		"roomStatus": "booked",
+		"roomFullyBooked": false,
+		"roomBookings": [{
+			"bookedBy": "Chaithra",
+			"meetingName": "Meeting",
+			"bookedDate": "27 / 09 / 2018",
+			"bookedTimeFrom": "5: 00 pm",
+			"bookedTimeTo": "5: 30 pm"
+		}, {
+			"bookedBy": "Sandeep",
+			"meetingName": "Demo",
+			"bookedDate": "28 / 09 / 2018",
+			"bookedTimeFrom": "5: 00 pm",
+			"bookedTimeTo": "5: 30 pm"
+		}],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Adapters \u0026 Cables", "Audio/Speakers"]
+	}, {
+		"roomName": "Liege",
+		"roomStatus": "booked",
+		"roomFullyBooked": false,
+		"roomBookings": [{
+			"bookedBy": "Madhuri",
+			"meetingName": "Meeting",
+			"bookedDate": "27 / 09 / 2018",
+			"bookedTimeFrom": "5: 00 pm",
+			"bookedTimeTo": "5: 30 pm"
+		}],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Internet", "Conference Phone", "Projectors"]
+	}, {
+		"roomName": "Colorado",
+		"roomStatus": "booked",
+		"roomFullyBooked": true,
+		"roomBookings": [{
+			"bookedBy": "Daya Pandey",
+			"meetingName": "Meeting",
+			"bookedDate": "27 / 09 / 2018",
+			"bookedTimeFrom": "10: 00 am",
+			"bookedTimeTo": "5: 30 pm"
+		}],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Internet", "Conference Phone", "Projectors"]
+	}, {
+		"roomName": "Mumbai",
+		"roomStatus": "not booked",
+		"roomFullyBooked": false,
+		"roomBookings": [],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Internet", "Conference Phone", "Projectors"]
+	}, {
+		"roomName": "Amsterdam",
+		"roomStatus": "not booked",
+		"roomFullyBooked": false,
+		"roomBookings": [],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Adapters \u0026 Cables", "Audio/Speakers"]
+	}, {
+		"roomName": "Chennai",
+		"roomStatus": "not booked",
+		"roomFullyBooked": false,
+		"roomBookings": [],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Internet", "Conference Phone", "Projectors"]
+	}, {
+		"roomName": "Pune",
+		"roomStatus": "not booked",
+		"roomFullyBooked": false,
+		"roomBookings": [],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Adapters \u0026 Cables", "Audio/Speakers"]
+	}, {
+		"roomName": "Mysore",
+		"roomStatus": "not booked",
+		"roomFullyBooked": false,
+		"roomBookings": [],
+		"roomCapacity": "4pc",
+		"roomFacilities": ["AC", "TV", "Adapters \u0026 Cables", "Audio/Speakers"]
+	}]
 }
