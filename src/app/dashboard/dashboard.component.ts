@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 export class DashboardComponent implements OnInit {
   rooms: any[];
   selectedRoom: any;
+  roomBookedStatus: any;
   bookings: any[];
   parentSubject: Subject<any> = new Subject();
 
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getRooms();
+    this.roomBookedStatus = true;
   }
 
   // get rooms data
@@ -61,6 +63,8 @@ export class DashboardComponent implements OnInit {
     this.roomListService.updateRoomStatus(roomId, roomStatus).subscribe(
       data => {
         console.log(data);
+        this.getRooms();
+        this.showRoomDetails(roomId - 1);
       }
     );
   }

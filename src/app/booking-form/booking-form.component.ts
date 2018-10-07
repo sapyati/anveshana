@@ -51,6 +51,7 @@ export class BookingFormComponent implements OnInit, OnDestroy {
         this.roomBooked.emit(this.selectedRoom.id);
       }
     );
+    this.rForm.reset();
   }
 
   ngOnInit() {

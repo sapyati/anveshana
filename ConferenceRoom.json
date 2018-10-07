@@ -44,7 +44,7 @@
     {
       "id": 4,
       "roomName": "Mumbai",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -58,7 +58,7 @@
     {
       "id": 5,
       "roomName": "Amsterdam",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -71,7 +71,7 @@
     {
       "id": 6,
       "roomName": "Chennai",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -85,7 +85,7 @@
     {
       "id": 7,
       "roomName": "Pune",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -98,7 +98,7 @@
     {
       "id": 8,
       "roomName": "Mysore",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -145,6 +145,60 @@
       "bookedDate": "27 / 09 / 2018",
       "bookedTimeFrom": "10: 00 am",
       "bookedTimeTo": "5: 30 pm"
+    },
+    {
+      "conferenceId": 8,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDate": "",
+      "bookedTimeFrom": "",
+      "bookedTimeTo": "",
+      "id": 3
+    },
+    {
+      "conferenceId": 6,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDate": null,
+      "bookedTimeFrom": null,
+      "bookedTimeTo": null,
+      "id": 4
+    },
+    {
+      "conferenceId": 5,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDate": null,
+      "bookedTimeFrom": null,
+      "bookedTimeTo": null,
+      "id": 5
+    },
+    {
+      "conferenceId": 7,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDate": null,
+      "bookedTimeFrom": null,
+      "bookedTimeTo": null,
+      "id": 6
+    },
+    {
+      "conferenceId": 4,
+      "bookedBy": "admin",
+      "meetingName": "sdfsdf",
+      "bookedDate": null,
+      "bookedTimeFrom": null,
+      "bookedTimeTo": null,
+      "id": 7
+    },
+    {
+      "conferenceId": 6,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDate": "",
+      "bookedTimeFrom": "",
+      "bookedTimeTo": "",
+      "id": 8
     }
   ]
 }
