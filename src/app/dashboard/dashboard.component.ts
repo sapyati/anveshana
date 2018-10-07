@@ -10,7 +10,6 @@ import { Subject } from 'rxjs';
 export class DashboardComponent implements OnInit {
   rooms: any[];
   selectedRoom: any;
-  roomBookedStatus: any;
   bookings: any[];
   parentSubject: Subject<any> = new Subject();
 
@@ -18,7 +17,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getRooms();
-    this.roomBookedStatus = true;
   }
 
   // get rooms data
@@ -35,13 +33,15 @@ export class DashboardComponent implements OnInit {
 
   // show selected room details
   showRoomDetails(roomNo) {
-    this.selectedRoom = this.rooms[parseInt(roomNo, 10)];
+    this.selectedRoom = this.rooms[parseInt(roomNo, 10) - 1];
 
     // notify booking form component of the selected room
     this.notifyChildren(this.selectedRoom);
 
     // get bookings details on select
     this.getBookings(this.selectedRoom);
+
+    
   }
 
   // add active class to the selected room on svg (green border)
@@ -63,8 +63,8 @@ export class DashboardComponent implements OnInit {
     this.roomListService.updateRoomStatus(roomId, roomStatus).subscribe(
       data => {
         console.log(data);
-        this.getRooms();
-        this.showRoomDetails(roomId - 1);
+        this.showRoomDetails(roomId);
+        this.selectedRoom.roomStatus = roomStatus.roomStatus;
       }
     );
   }
