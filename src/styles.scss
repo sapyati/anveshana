@@ -23,20 +23,11 @@ body, html {
    clear: both;
 }
 
-.container {
-  margin: 0px auto;
-}
-body{
-
-}
 .content {
   margin-top: 55px;
 }
 
 @media only screen and (max-width: 640px) {
-  .container {
-    width: 100%;
-  }
   .content {
     margin-top: 20px;
     padding: 10px;
@@ -44,9 +35,6 @@ body{
 }
 
 @media only screen and (min-width: 641px) and (max-width: 1200px) {
-  .container {
-    width: 100%;
-  }
   .content {
     margin-top: 20px;
     padding: 10px;

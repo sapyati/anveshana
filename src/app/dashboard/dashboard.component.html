@@ -2,37 +2,11 @@
 <div class="content">
   <div class="container">
     <div class="grid">
+      <!-- svg section -->
       <div class="grid__item" *ngIf="rooms">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
           y="0px" width="421.8px" height="493.3px" viewBox="0 0 421.8 493.3" style="enable-background:new 0 0 421.8 493.3;"
           xml:space="preserve">
-          <style type="text/css">
-            .st-grey {
-              fill: #F0F0F0;
-              stroke: #9B9B9B;
-            }
-            .st-blue {
-              fill: #BAE1FF;
-              stroke: #9B9B9B;
-              stroke-miterlimit: 10;
-            }
-            .st-green {
-              fill: #BAFFC9;
-              stroke: #9B9B9B;
-              stroke-miterlimit: 10;
-            }
-            .st-red {
-              fill: #FFB3BA;
-              stroke: #9B9B9B;
-              stroke-miterlimit: 10;
-            }
-            .st-selected {
-              stroke: #A2CD48;
-              stroke-miterlimit: 10;
-              stroke-width: 3;
-              transition: all 600ms ease;
-            }
-          </style>
           <g>
             <rect x="0.5" y="0.5" class="st-grey" width="297.3" height="45.7" />
           </g>
@@ -110,9 +84,13 @@
           </g>
         </svg>
       </div>
+      <!-- svg section -->
+
+      <!-- room details -->
       <div class="grid__item grid__item-selectedRoom" *ngIf="selectedRoom">
         <h3 class="room-name">{{selectedRoom.roomName}} - <small>{{selectedRoom.roomStatus}}</small></h3>
-        <div class="booked-by" *ngFor="let booking of selectedRoom.roomBookings">
+        {{bookings}}
+        <div class="booked-by" *ngFor="let booking of bookings">
           <h3>{{booking.meetingName}}</h3>
           <p>Booked By : {{booking.bookedBy}}</p>
           <p>Date : {{booking.bookedDate}}</p>
@@ -121,9 +99,19 @@
         <p><strong>Room Capacity</strong> : {{selectedRoom.roomCapacity}}</p>
         <p><strong>Room Facilities</strong> : <br>{{selectedRoom.roomFacilities}}</p>
       </div>
+      <!-- room details -->
+
+      <!-- booking form -->
       <div class="grid__item" *ngIf="selectedRoom">
-        sdfasd
+        <app-booking-form 
+          [jsonData]="rooms" 
+          [selectedRoom]="selectedRoom" 
+          [parentSubject]="parentSubject"
+          (roomBooked)='changeRoomStatus($event)'>          
+        </app-booking-form>
       </div>
+      <!-- booking form -->
+
     </div>
   </div>
 </div>
