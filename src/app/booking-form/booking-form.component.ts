@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { RoomsListService } from '../rooms-list.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-booking-form',
@@ -17,7 +18,7 @@ export class BookingFormComponent implements OnInit, OnDestroy {
 
   rForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private roomListService: RoomsListService) {
+  constructor(private fb: FormBuilder, private roomListService: RoomsListService, private toastr: ToastrService) {
     this.rForm = fb.group({
       'roomName': this.selectedRoom,
       'meetingName': [null, Validators.compose(
@@ -49,9 +50,16 @@ export class BookingFormComponent implements OnInit, OnDestroy {
       data => {
         console.log(data);
         this.roomBooked.emit(this.selectedRoom.id);
+        this.showSuccess(postData);
       }
     );
     this.rForm.reset();
+  }
+
+  showSuccess(postData) {
+    this.toastr.success(`Room ${this.selectedRoom.roomName} is booked on date ${postData.bookedDate} from ${postData.bookedTimeFrom} to ${postData.bookedTimeTo}`, 'Booking Successful!',
+      { positionClass: 'toast-top-center', closeButton: true }
+    );
   }
 
   ngOnInit() {

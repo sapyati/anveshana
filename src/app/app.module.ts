@@ -11,6 +11,8 @@ import {RouterModule, Routes} from '@angular/router';
 import { RoomsListService } from './rooms-list.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookingFormComponent } from './booking-form/booking-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 const appRoutes: Routes = [
   {
@@ -39,7 +41,9 @@ const appRoutes: Routes = [
     AngularFontAwesomeModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [ RoomsListService ],
   bootstrap: [AppComponent]
