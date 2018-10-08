@@ -1,6 +1,37 @@
 <!-- dashboard component -->
 <div class="content">
   <div class="container">
+    <!-- previous bookings table -->
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Meeting / Conference Room</th>
+              <th>Event Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of previousBookings; let i = index" >
+              <td>{{ i+1 }}</td>
+              <td>{{ getRoomNameById(booking.conferenceId) }}</td>
+              <td>{{ booking.meetingName }}</td>
+              <td>{{booking.bookedDate}}</td>
+              <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
+              <td>
+                <a href="#" class="btn btn-primary btn-xs">Edit</a>
+                <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- previous bookings table -->
     <div class="grid">
       <!-- svg section -->
       <div class="grid__item" *ngIf="rooms">

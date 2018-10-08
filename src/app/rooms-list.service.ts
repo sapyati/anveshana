@@ -30,6 +30,15 @@ export class RoomsListService {
       );
   }
 
+  getPreviousBookings(user): Observable<any> {
+    const apiURL = 'http://localhost:3000/roomBookings?bookedBy=' + user;
+    return this.http.get(apiURL)
+      .pipe(
+      tap(previousBookings => console.log(previousBookings)),
+        catchError(this.handleError('previousBookings', []))
+      );
+  }
+
   addBooking(roomId, postData): Observable<any> {
     const apiURL = 'http://localhost:3000/roomBookings?conferenceId=' + roomId;
     return this.http.post(apiURL, postData, httpOptions)

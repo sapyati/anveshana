@@ -13,18 +13,31 @@ export class DashboardComponent implements OnInit {
   roomBookedStatus: any;
   bookings: any[];
   parentSubject: Subject<any> = new Subject();
+  previousBookings: any[];
 
   constructor(private roomListService: RoomsListService, public app: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getRooms();
-    this.roomBookedStatus = true;
+    this.getPreviousBookings(localStorage.getItem('loggedInUser'));
   }
 
   // get rooms data
   getRooms() {
     this.roomListService.getRooms()
       .subscribe(data => this.rooms = data);
+  }
+
+  // get room name by id
+  getRoomNameById(roomId) {
+    const bookedRoomName = this.rooms.filter(room => room.id === roomId);
+    return bookedRoomName[0].roomName;
+  }
+
+  // get bookings data for selected room
+  getPreviousBookings(user) {
+    this.roomListService.getPreviousBookings(user)
+      .subscribe(data => this.previousBookings = data);
   }
 
   // get bookings data for selected room
@@ -66,6 +79,7 @@ export class DashboardComponent implements OnInit {
         const roomIndex = parseInt(roomId, 10) - 1;
         this.showRoomDetails(roomIndex);
         this.selectedRoom.roomStatus = 'booked';
+        this.getPreviousBookings(localStorage.getItem('loggedInUser'));
       }
     );
   }
