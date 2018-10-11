@@ -6,38 +6,25 @@
 
     </div>
   </div><br/>
-  <div class="container">
-    <!-- previous bookings table -->
-    <div class="row">
-      <div class="col-md-12">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Meeting / Conference Room</th>
-              <th>Event Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let booking of previousBookings; let i = index" >
-              <td>{{ i+1 }}</td>
-              <td>{{ getRoomNameById(booking.conferenceId) }}</td>
-              <td>{{ booking.meetingName }}</td>
-              <td>{{booking.bookedDate}}</td>
-              <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
-              <td>
-                <a href="#" class="btn btn-primary btn-xs">Edit</a>
-                <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- previous bookings table -->
+  <div class="col-xs-12 tab-margin">
+    <ul class="rtab" role="tablist" id="customsTablist">
+      <li id="singletab" class="rtab-item">
+        <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : singletab }"
+                (click)="getSingle()">One Day</button>
+      </li>
+      <li id="multipletab" class="rtab-item">
+        <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : multipletab }"
+                (click)="getMultiple()">Multiple Days</button>
+      </li>
+      <li id="perviousBooking" class="rtab-item">
+        <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : perviousBooking }"
+                (click)="ViewpreviousBooking()">View previous bookings </button>
+      </li>
+    </ul>
+  </div>
+  <!-- ./Tabs -->
+  <div class="container" id="singleMultiSection" *ngIf="singleMultiSection">
+
     <div class="grid">
       <!-- svg section -->
       <div class="grid__item" *ngIf="rooms">
@@ -178,4 +165,38 @@
 
     </div>
   </div>
+
+  <!-- previous bookings table -->
+  <div class="" id="viewPreviousSection" *ngIf="viewPreviousSection">
+    <br/>
+    <div class="col-md-12">
+      <div class="col-md-2"></div>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Meeting / Conference Room</th>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let booking of previousBookings; let i = index" >
+          <td>{{ i+1 }}</td>
+          <td>{{ getRoomNameById(booking.conferenceId) }}</td>
+          <td>{{ booking.meetingName }}</td>
+          <td>{{booking.bookedDate}}</td>
+          <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
+          <td>
+            <a href="#" class="btn btn-primary btn-xs">Edit</a>
+            <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- previous bookings table -->
 </div>

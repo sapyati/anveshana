@@ -14,6 +14,11 @@ export class DashboardComponent implements OnInit {
   bookings: any[];
   parentSubject: Subject<any> = new Subject();
   previousBookings: any[];
+  public multipletab = false;
+  public singletab = true;
+  public perviousBooking = false;
+  public singleMultiSection = true;
+  public viewPreviousSection = false;
 
   constructor(private roomListService: RoomsListService, public app: ChangeDetectorRef) { }
 
@@ -82,6 +87,30 @@ export class DashboardComponent implements OnInit {
         this.getPreviousBookings(localStorage.getItem('loggedInUser'));
       }
     );
+  }
+  /*getting the total value of customs*/
+  getSingle() {
+    this.multipletab = false;
+    this.perviousBooking = false;
+    this.viewPreviousSection = false;
+    this.singletab = true;
+    this.singleMultiSection = true;
+  }
+
+  /*getting per item value of customs*/
+  getMultiple() {
+    this.singletab = false;
+    this.perviousBooking = false;
+    this.viewPreviousSection = false;
+    this.multipletab = true;
+    this.singleMultiSection = true;
+  }
+  ViewpreviousBooking() {
+    this.multipletab = false;
+    this.singletab = false;
+    this.perviousBooking = true;
+    this.singleMultiSection = false;
+    this.viewPreviousSection = true;
   }
 
 }
