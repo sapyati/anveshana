@@ -1,29 +1,36 @@
 
 <div class="container back-log  col-lg-12 col-md-12">
-  <div class="">
+
     <div class="container clearfix">
       <div class="header__brand">
         <img src="https://appaccess.mphasis.com/images/Mphasis_Login.png" alt="">
 
       </div>
     </div>
-  </div>
   <br/><br/><br/><br/>
   <div class="login_container">
   <div class="col-md-4 col-lg-4"></div>
   <div class="col-md-6 col-lg-6">
     <!--Updated form-->
-    <form action="" class="" (submit) = loginUser($event)><br/><br/>
+    <form [formGroup]="rForm" (submit) = loginUser(rForm.value)><br/><br/>
       <h3 class="comp_name">Sabha</h3><br/><br/><br/>
             <div class="">
-              <input type="text" class="" id="emp-id" placeholder="Enter your employee id">
+              <input type="text" class="" id="emp-id" placeholder="Enter your employee id" formControlName="employeeId">
             </div>
+            <span class="help-block" *ngIf="!rForm.controls['employeeId'].valid
+                            && rForm.controls['employeeId'].touched">
+              This field is required
+            </span>
       <br/>
             <div class="">
-              <input type="password" class="" id="password" placeholder="Enter your password">
+              <input type="password" class="" id="password" placeholder="Enter your password" formControlName="password">
             </div>
+            <span class="help-block" *ngIf="!rForm.controls['password'].valid
+                                        && rForm.controls['password'].touched">
+              This field is required
+            </span>
       <br/><br/><br/>
-            <input type="submit" value="login" class="btn-sabha-login">
+            <input type="submit" value="login" class="btn-sabha-login" [disabled]="!rForm.valid">
     </form>
 
   </div>

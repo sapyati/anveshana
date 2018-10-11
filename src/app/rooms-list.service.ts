@@ -13,11 +13,46 @@ export class RoomsListService {
   constructor(private http: HttpClient) { }
 
   getRooms(): Observable<any> {
-    const apiURL = 'https://api.myjson.com/bins/nc200';
+    const roomapiURL = 'http://localhost:3000/conferenceRooms';
+    return this.http.get(roomapiURL)
+      .pipe(
+        tap(rooms => console.log(rooms)),
+        catchError(this.handleError('getHeroes', []))
+      );
+  }
+
+  getBookings(room): Observable<any> {
+    const apiURL = 'http://localhost:3000/roomBookings?conferenceId=' + room.id;
     return this.http.get(apiURL)
       .pipe(
-        tap(rooms => console.log('fetched heroes')),
+        tap(bookings => console.log(bookings)),
         catchError(this.handleError('getHeroes', []))
+      );
+  }
+
+  getPreviousBookings(user): Observable<any> {
+    const apiURL = 'http://localhost:3000/roomBookings?bookedBy=' + user;
+    return this.http.get(apiURL)
+      .pipe(
+      tap(previousBookings => console.log(previousBookings)),
+        catchError(this.handleError('previousBookings', []))
+      );
+  }
+
+  addBooking(roomId, postData): Observable<any> {
+    const apiURL = 'http://localhost:3000/roomBookings?conferenceId=' + roomId;
+    return this.http.post(apiURL, postData, httpOptions)
+      .pipe(
+        catchError(this.handleError('addBooking', postData))
+      );
+  }
+
+  // for updating room data on booking
+  updateRoomStatus(roomId, roomStatus) {
+    const apiURL = 'http://localhost:3000/conferenceRooms/' + roomId;
+    return this.http.patch(apiURL, roomStatus, httpOptions)
+      .pipe(
+        catchError(this.handleError('addBooking', roomId))
       );
   }
 
@@ -36,3 +71,4 @@ export class RoomsListService {
   }
 
 }
+

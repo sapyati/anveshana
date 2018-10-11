@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,18 +9,28 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  rForm: FormGroup;
+
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.rForm = fb.group({
+      'employeeId': [null, Validators.compose(
+        [ Validators.required ]
+      )],
+      'password': [null, Validators.compose(
+        [Validators.required]
+      )]
+    });
+  }
 
   ngOnInit() {
   }
 
-  loginUser(e){
-    e.preventDefault();
-    console.log(e);
-    var username = e.target.elements[0].value;
-    var password = e.target.elements[1].value;
-    if(username == "admin" && password == "password"){
-    this.router.navigate(['dashboard']);
+  loginUser(post) {
+    const username = post.employeeId;
+    const password = post.password;
+    localStorage.setItem('loggedInUser', username);
+    if (username === 'admin' && password === 'password') {
+      this.router.navigate(['dashboard']);
     }
   }
 

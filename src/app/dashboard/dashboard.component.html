@@ -1,7 +1,32 @@
 <!-- dashboard component -->
 <div class="content">
-  <div class="container">
+  <div class="container clearfix">
+    <div class="header__brand">
+      <img src="https://appaccess.mphasis.com/images/Mphasis_Login.png" alt="">
+
+    </div>
+  </div><br/>
+  <div class="col-xs-12 tab-margin">
+    <ul class="rtab" role="tablist" id="customsTablist">
+      <li id="singletab" class="rtab-item">
+        <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : singletab }"
+                (click)="getSingle()">One Day</button>
+      </li>
+      <li id="multipletab" class="rtab-item">
+        <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : multipletab }"
+                (click)="getMultiple()">Multiple Days</button>
+      </li>
+      <li id="perviousBooking" class="rtab-item">
+        <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : perviousBooking }"
+                (click)="ViewpreviousBooking()">View previous bookings </button>
+      </li>
+    </ul>
+  </div>
+  <!-- ./Tabs -->
+  <div class="container" id="singleMultiSection" *ngIf="singleMultiSection">
+
     <div class="grid">
+      <!-- svg section -->
       <div class="grid__item" *ngIf="rooms">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
           y="0px" width="421.8px" height="493.3px" viewBox="0 0 421.8 493.3" style="enable-background:new 0 0 421.8 493.3;"
@@ -110,9 +135,13 @@
           </g>
         </svg>
       </div>
+      <!-- svg section -->
+
+      <!-- room details -->
       <div class="grid__item grid__item-selectedRoom" *ngIf="selectedRoom">
         <h3 class="room-name">{{selectedRoom.roomName}} - <small>{{selectedRoom.roomStatus}}</small></h3>
-        <div class="booked-by" *ngFor="let booking of selectedRoom.roomBookings">
+        {{bookings}}
+        <div class="booked-by" *ngFor="let booking of bookings">
           <h3>{{booking.meetingName}}</h3>
           <p>Booked By : {{booking.bookedBy}}</p>
           <p>Date : {{booking.bookedDate}}</p>
@@ -121,9 +150,53 @@
         <p><strong>Room Capacity</strong> : {{selectedRoom.roomCapacity}}</p>
         <p><strong>Room Facilities</strong> : <br>{{selectedRoom.roomFacilities}}</p>
       </div>
+      <!-- room details -->
+
+      <!-- booking form -->
       <div class="grid__item" *ngIf="selectedRoom">
-        test data
+        <app-booking-form
+          [jsonData]="rooms"
+          [selectedRoom]="selectedRoom"
+          [parentSubject]="parentSubject"
+          (roomBooked)='changeRoomStatus($event)'>
+        </app-booking-form>
       </div>
+      <!-- booking form -->
+
     </div>
   </div>
+
+  <!-- previous bookings table -->
+  <div class="" id="viewPreviousSection" *ngIf="viewPreviousSection">
+    <br/>
+    <div class="col-md-12">
+      <div class="col-md-2"></div>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Meeting / Conference Room</th>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let booking of previousBookings; let i = index" >
+          <td>{{ i+1 }}</td>
+          <td>{{ getRoomNameById(booking.conferenceId) }}</td>
+          <td>{{ booking.meetingName }}</td>
+          <td>{{booking.bookedDate}}</td>
+          <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
+          <td>
+            <a href="#" class="btn btn-primary btn-xs">Edit</a>
+            <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- previous bookings table -->
 </div>

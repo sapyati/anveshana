@@ -1,0 +1,22 @@
+{
+  "environments": [
+    {
+      "test": "sdfsadf",
+      "environmentId": "12",
+      "id": 12
+    },
+    {
+      "id": 19
+    }
+  ],
+  "reports": [
+    {
+      "id": 17,
+      "environmentId": 12
+    },
+    {
+      "id": 25,
+      "environmentId": 12
+    }
+  ]
+}
