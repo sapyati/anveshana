@@ -56,8 +56,7 @@ export class BookingFormComponent implements OnInit, OnDestroy {
     this.rForm.reset();
   }
 
-  showSuccess(postData) {
-    this.toastr.success(`Room ${this.selectedRoom.roomName} is booked on date ${postData.bookedDate} from ${postData.bookedTimeFrom} to ${postData.bookedTimeTo}`, 'Booking Successful!',
+  showSuccess(postData) {this.toastr.success(`Room ${this.selectedRoom.roomName} is booked on date ${postData.bookedDate} from ${postData.bookedTimeFrom} to ${postData.bookedTimeTo}`, 'Booking Successful!',
       { positionClass: 'toast-top-center', closeButton: true }
     );
   }
