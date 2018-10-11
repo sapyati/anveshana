@@ -38,6 +38,32 @@ svg {
   height: auto;
 }
 
+.st-grey {
+  fill: #F0F0F0;
+  stroke: #9B9B9B;
+}
+.st-blue {
+  fill: #BAE1FF;
+  stroke: #9B9B9B;
+  stroke-miterlimit: 10;
+}
+.st-green {
+  fill: #BAFFC9;
+  stroke: #9B9B9B;
+  stroke-miterlimit: 10;
+}
+.st-red {
+  fill: #FFB3BA;
+  stroke: #9B9B9B;
+  stroke-miterlimit: 10;
+}
+.st-selected {
+  stroke: #A2CD48;
+  stroke-miterlimit: 10;
+  stroke-width: 3;
+  transition: all 600ms ease;
+}
+
 .booked-by {
   padding: 5px;
   background: #BAE1FF;

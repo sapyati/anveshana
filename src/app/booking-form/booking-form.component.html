@@ -1,0 +1,43 @@
+<form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
+  <!-- room select  -->
+  <div class="form-group" [ngClass]="">
+    <label for="select-room">Please select a room to book</label>
+    <select formControlName="roomName" id="select-room" class="form-control" (change)="onChange($event.target.value)">
+      <option value="">Select</option>
+      <option *ngFor="let room of jsonData" [value]="room.roomName">{{room.roomName}}</option>
+    </select>
+  </div>
+
+  <!-- meeting/conference name -->
+  <div class="form-group" [ngClass]="{'has-error': !rForm.controls['meetingName'].valid && rForm.controls['meetingName'].touched}">
+    <label for="meetingName">Event Name</label>
+    <input type="text" class="form-control" id="meetingName" placeholder="Event Name" formControlName="meetingName">
+    <span class="help-block" *ngIf="!rForm.controls['meetingName'].valid
+                && rForm.controls['meetingName'].touched && !rForm.controls['meetingName'].errors?.minlength">
+      This field is required
+    </span>
+    <span class="help-block" *ngIf="!rForm.controls['meetingName'].valid
+                    && rForm.controls['meetingName'].touched && rForm.controls['meetingName'].errors?.minlength">
+      You need to specify atleast 3 characters
+    </span>
+  </div>  
+
+  <!-- booking date -->
+  <div class="form-group">
+    <label for="bookedDate">Date</label>
+    <input type="text" class="form-control" id="bookedDate" placeholder="Date" formControlName="bookedDate">
+  </div>
+
+  <!-- booking from time -->
+  <div class="form-group">
+    <label for="bookedTimeFrom">From Time</label>
+    <input type="text" class="form-control" id="bookedTimeFrom" placeholder="From Time" formControlName="bookedTimeFrom">
+  </div>
+
+  <!-- booking to time -->
+  <div class="form-group">
+    <label for="bookedTimeTo">To Time</label>
+    <input type="text" class="form-control" id="bookedTimeTo" placeholder="To Time" formControlName="bookedTimeTo">    
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!rForm.valid">Submit</button>
+</form>
