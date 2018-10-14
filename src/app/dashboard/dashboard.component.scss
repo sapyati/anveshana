@@ -111,10 +111,10 @@ svg {
   height: 100%;
   background: none;
   border: none;
-  font-size: 15px;
-  color: #007AB7;
+  font-size: 1.2em;
+  color: #d91260;
+  font-weight: bold;
   margin: 0;
-  font-weight: 400;
 }
 
 .rtab {
@@ -150,8 +150,7 @@ svg {
 
 
 button.rtab-item--active{
-  border-bottom: 5px solid #007AB7 !important;
-  border-radius: 0;
+  border-bottom: 5px solid #96c764 !important;
 }
 
 .tabs {
@@ -173,3 +172,29 @@ button.rtab-item--active{
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+.table-striped{
+  width: 69%;
+  background-color: #f3f3f3;
+  tbody{
+  }
+  thead,tbody,tr,td,th{
+    padding: 1.4% 1%;
+  }
+  tbody{
+    td{
+      padding:10px 0;
+    }
+  }
+  thead {
+    tr{
+      th{
+        color:#fff;
+        font-size: 1.2em;
+        background-color: #96c764;
+        border-color:#96c764;
+      }
+    }
+  }
+}
+
