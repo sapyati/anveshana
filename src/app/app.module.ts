@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { RoomsListService } from './rooms-list.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookingFormComponent } from './booking-form/booking-form.component';
@@ -44,6 +44,10 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ RoomsListService ],
   bootstrap: [AppComponent]
