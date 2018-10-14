@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookingFormComponent } from './booking-form/booking-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { BsDatepickerModule, TimepickerModule, AccordionModule } from 'ngx-bootstrap';
 
 const appRoutes: Routes = [
   {
@@ -20,8 +21,8 @@ const appRoutes: Routes = [
     component: LoginComponent
   },
   {
-    path : 'dashboard',
-    component : DashboardComponent
+    path: 'dashboard',
+    component: DashboardComponent
   }
 ];
 
@@ -43,13 +44,17 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
+    AccordionModule.forRoot()
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDatepickerModule
   ],
-  providers: [ RoomsListService ],
+  providers: [RoomsListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

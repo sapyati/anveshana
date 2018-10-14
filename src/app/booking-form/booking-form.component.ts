@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class BookingFormComponent implements OnInit, OnDestroy {
 
   @Input() jsonData: any;
+  @Input() dateTimeForm: any;
   @Input() selectedRoom: any;
   @Input() parentSubject: Subject<any>;
   @Output() roomBooked = new EventEmitter();
@@ -20,16 +21,12 @@ export class BookingFormComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, private roomListService: RoomsListService, private toastr: ToastrService) {
     this.rForm = fb.group({
-      'roomName': this.selectedRoom,
       'meetingName': [null, Validators.compose(
         [Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50)
         ]
-      )],
-      'bookedDate' : '',
-      'bookedTimeFrom' : '',
-      'bookedTimeTo' : ''
+      )]
     });
   }
 
@@ -41,16 +38,17 @@ export class BookingFormComponent implements OnInit, OnDestroy {
       'conferenceId': this.selectedRoom.id,
       'bookedBy': localStorage.getItem('loggedInUser'),
       'meetingName': post.meetingName,
-      'bookedDate': post.bookedDate,
-      'bookedTimeFrom': post.bookedTimeFrom,
-      'bookedTimeTo': post.bookedTimeTo
+      'bookedDateFrom': this.dateTimeForm.value.bookingDateFrom.toLocaleDateString('en-GB'),
+      'bookedDateTo': this.dateTimeForm.value.bookingDateTo.toLocaleDateString('en-GB'),
+      'bookedTimeFrom': this.dateTimeForm.value.bookedTimeFrom.toLocaleTimeString('en-GB'),
+      'bookedTimeTo': this.dateTimeForm.value.bookedTimeTo.toLocaleTimeString('en-GB')
     };
     console.log(postData);
     this.roomListService.addBooking(this.selectedRoom.id, postData).subscribe(
       data => {
         console.log(data);
-        this.roomBooked.emit(this.selectedRoom.id);
         this.showSuccess(postData);
+        this.roomBooked.emit(this.selectedRoom.id);
       }
     );
     this.rForm.reset();
@@ -59,21 +57,19 @@ export class BookingFormComponent implements OnInit, OnDestroy {
   showSuccess(postData) {
     this.toastr.success(
       `Room ${this.selectedRoom.roomName} is booked on date
-      ${postData.bookedDate} from ${postData.bookedTimeFrom} to
+      ${postData.bookedDateFrom} to ${postData.bookedDateTo} from ${postData.bookedTimeFrom} to
       ${postData.bookedTimeTo}`, 'Booking Successful!',
       { positionClass: 'toast-top-center', closeButton: true }
     );
   }
 
   ngOnInit() {
-    // set booking form Room Name value to selected room
-    this.rForm.get('roomName').setValue(this.selectedRoom.roomName);
-
     // set booking form Room Name value to selected room change
     this.parentSubject.subscribe(event => {
-      this.rForm.get('roomName').setValue(event.roomName);
-      console.log(this.rForm.value.room);
+      console.log();
     });
+
+    console.log(this.dateTimeForm);
 
   }
 

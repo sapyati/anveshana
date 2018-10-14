@@ -21,6 +21,15 @@ export class RoomsListService {
       );
   }
 
+  getAllRoomBookings(): Observable<any> {
+    const apiURL = `http://localhost:3000/roomBookings`;
+    return this.http.get(apiURL)
+      .pipe(
+        tap(allRoomBookings => console.log(allRoomBookings)),
+        catchError(this.handleError('allRoomBookings', []))
+      );
+  }
+
   getBookings(room): Observable<any> {
     const apiURL = 'http://localhost:3000/roomBookings?conferenceId=' + room.id;
     return this.http.get(apiURL)

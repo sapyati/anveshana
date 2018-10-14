@@ -2,42 +2,80 @@
 <div class="content">
   <div class="container">
     <!-- previous bookings table -->
-    <div class="row">
+    
+    <div class="row" *ngIf="previousBookings.length" >
+      
       <div class="col-md-12">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Meeting / Conference Room</th>
-              <th>Event Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let booking of previousBookings; let i = index" >
-              <td>{{ i+1 }}</td>
-              <td>{{ getRoomNameById(booking.conferenceId) }}</td>
-              <td>{{ booking.meetingName }}</td>
-              <td>{{booking.bookedDate}}</td>
-              <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
-              <td>
-                <a href="#" class="btn btn-primary btn-xs">Edit</a>
-                <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <accordion *ngIf="previousBookings.length">
+          <accordion-group heading="View your previous bookings" [isOpen]="isAccordianOpen">
+            <table class="table table-bordered table-hover">
+              <caption class="booking-caption">Your Bookings</caption>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Meeting / Conference Room</th>
+                  <th>Event Name</th>
+                  <th>Date From</th>
+                  <th>Date To</th>
+                  <th>Time</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let booking of previousBookings; let i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ getRoomNameById(booking.conferenceId) }}</td>
+                  <td>{{ booking.meetingName }}</td>
+                  <td>{{booking.bookedDateFrom}}</td>
+                  <td>{{booking.bookedDateTo}}</td>
+                  <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
+                  <td>
+                    <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </accordion-group>
+        </accordion>
+        
       </div>
     </div>
     <!-- previous bookings table -->
-    <div class="grid">
+
+    <form [formGroup]="dateTimeForm" (ngSubmit)="selectDateTime(dateTimeForm.value)">
+      <div class="row">
+        <div class="col-xs-12 col-12 col-md-2 form-group">
+          <label for="bookedDateFrom">From Date</label>
+          <input class="form-control" id="bookedDateFrom" placeholder="From Date" formControlName="bookingDateFrom"
+            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="fromMinDate"
+            [maxDate]="fromMaxDate" (bsValueChange)="fromDateChanged($event)">
+        </div>
+        <div class="col-xs-12 col-12 col-md-2 form-group">
+          <label for="bookedDateTo">To Date</label>
+          <input class="form-control" id="bookedDateTo" placeholder="To Date" formControlName="bookingDateTo"
+            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="toMinDate"
+            [maxDate]="toMaxDate" (bsValueChange)="toDateChanged($event)">
+          <span *ngIf="fromToDateError">"To Date" can not be less than "From Date". Please select another date.</span>
+        </div>
+        <div class="col-md-2 form-group col-12 col-xs-12">
+          <timepicker formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event)"></timepicker>
+        </div>
+        <div class="col-md-2 form-group col-12 col-xs-12">
+          <timepicker formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>
+        </div>
+        <div class="col-md-2 form-group col-12 col-xs-12">
+          <button class="btn btn-success" style="margin-top:25px">Search Rooms <i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row" *ngIf="showMap" id="room-details-booking">
       <!-- svg section -->
-      <div class="grid__item" *ngIf="rooms">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-          y="0px" width="421.8px" height="493.3px" viewBox="0 0 421.8 493.3" style="enable-background:new 0 0 421.8 493.3;"
-          xml:space="preserve">
+      <div class="col-md-4" *ngIf="rooms && dateTimeForm.valid">
+        <h3>Please click a room to select</h3>
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="421.8px" height="493.3px" viewBox="0 0 421.8 493.3" style="enable-background:new 0 0 421.8 493.3;" xml:space="preserve">
           <g>
             <rect x="0.5" y="0.5" class="st-grey" width="297.3" height="45.7" />
           </g>
@@ -47,102 +85,109 @@
           <g>
             <rect x="125.8" y="63.2" class="st-grey" width="109.3" height="303.3" />
             <rect x="189.5" y="320.8" [ngClass]="{
-            'st-blue': rooms[7].roomStatus === 'booked' && rooms[7].roomFullyBooked === false,
-            'st-red': rooms[7].roomStatus === 'booked' && rooms[7].roomFullyBooked === true,
-            'st-green': rooms[7].roomStatus === 'not booked' && rooms[7].roomFullyBooked === false,
-            'st-selected': isActive(7)
-            }" width="45.7" height="45.7" (click)="showRoomDetails(7)" />
+                    'st-blue': rooms[7].roomStatus === 'booked' && rooms[7].roomFullyBooked === false,
+                    'st-red': rooms[7].roomStatus === 'booked' && rooms[7].roomFullyBooked === true,
+                    'st-green': rooms[7].roomStatus === 'not booked' && rooms[7].roomFullyBooked === false,
+                    'st-selected': isActive(7)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(7)" />
             <rect x="189.5" y="182.7" [ngClass]="{ 
-              'st-blue': rooms[0].roomStatus === 'booked' && rooms[0].roomFullyBooked === false, 
-              'st-red': rooms[0].roomStatus === 'booked' && rooms[0].roomFullyBooked === true, 
-              'st-green': rooms[0].roomStatus === 'not booked' && rooms[0].roomFullyBooked === false,
-              'st-selected': isActive(0)
-            }" width="45.7"
-              height="45.7" (click)="showRoomDetails(0)" />
+                      'st-blue': rooms[0].roomStatus === 'booked' && rooms[0].roomFullyBooked === false, 
+                      'st-red': rooms[0].roomStatus === 'booked' && rooms[0].roomFullyBooked === true, 
+                      'st-green': rooms[0].roomStatus === 'not booked' && rooms[0].roomFullyBooked === false,
+                      'st-selected': isActive(0)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(0)" />
           </g>
           <g>
             <rect x="0.5" y="63.2" class="st-grey" width="108.3" height="365.9" />
             <rect x="0.5" y="224.3" [ngClass]="{
-            'st-blue': rooms[1].roomStatus === 'booked' && rooms[1].roomFullyBooked === false,
-            'st-red': rooms[1].roomStatus === 'booked' && rooms[1].roomFullyBooked === true,
-            'st-green': rooms[1].roomStatus === 'not booked' && rooms[1].roomFullyBooked === false,
-            'st-selected': isActive(1)
-            }" width="45.7" height="45.7" (click)="showRoomDetails(1)" />
-            <rect x="63.2" y="383.4"[ngClass]="{
-            'st-blue': rooms[2].roomStatus === 'booked' && rooms[2].roomFullyBooked === false,
-            'st-red': rooms[2].roomStatus === 'booked' && rooms[2].roomFullyBooked === true,
-            'st-green': rooms[2].roomStatus === 'not booked' && rooms[2].roomFullyBooked === false,
-            'st-selected': isActive(2)
-            }" width="45.7" height="45.7" (click)="showRoomDetails(2)" />
+                    'st-blue': rooms[1].roomStatus === 'booked' && rooms[1].roomFullyBooked === false,
+                    'st-red': rooms[1].roomStatus === 'booked' && rooms[1].roomFullyBooked === true,
+                    'st-green': rooms[1].roomStatus === 'not booked' && rooms[1].roomFullyBooked === false,
+                    'st-selected': isActive(1)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(1)" />
+            <rect x="63.2" y="383.4" [ngClass]="{
+                    'st-blue': rooms[2].roomStatus === 'booked' && rooms[2].roomFullyBooked === false,
+                    'st-red': rooms[2].roomStatus === 'booked' && rooms[2].roomFullyBooked === true,
+                    'st-green': rooms[2].roomStatus === 'not booked' && rooms[2].roomFullyBooked === false,
+                    'st-selected': isActive(2)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(2)" />
           </g>
           <g>
             <polygon class="st-grey" points="171.5,384.4 125.8,384.4 125.8,447.1 63.2,447.1 63.2,492.8 125.8,492.8 171.5,492.8 235.1,492.8 
-    		235.1,447.1 235.1,384.4 	" />
+            		235.1,447.1 235.1,384.4 	" />
             <rect x="189.5" y="447.1" [ngClass]="{
-            'st-blue': rooms[3].roomStatus === 'booked' && rooms[3].roomFullyBooked === false,
-            'st-red': rooms[3].roomStatus === 'booked' && rooms[3].roomFullyBooked === true,
-            'st-green': rooms[3].roomStatus === 'not booked' && rooms[3].roomFullyBooked === false,
-            'st-selected': isActive(3)
-            }" width="45.7" height="45.7" (click)="showRoomDetails(3)" />
+                    'st-blue': rooms[3].roomStatus === 'booked' && rooms[3].roomFullyBooked === false,
+                    'st-red': rooms[3].roomStatus === 'booked' && rooms[3].roomFullyBooked === true,
+                    'st-green': rooms[3].roomStatus === 'not booked' && rooms[3].roomFullyBooked === false,
+                    'st-selected': isActive(3)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(3)" />
           </g>
           <g>
             <g>
               <polygon class="st-grey" points="360.4,256.1 360.4,192.5 297.8,192.5 297.8,126.8 252.1,126.8 252.1,350.7 252.1,365.4 252.1,366.4 
-    			421.1,366.4 421.1,364.4 421.1,350.7 421.1,256.1 		" />
+            			421.1,366.4 421.1,364.4 421.1,350.7 421.1,256.1 		" />
               <rect x="252.1" y="126.8" [ngClass]="{
-              'st-blue': rooms[4].roomStatus === 'booked' && rooms[4].roomFullyBooked === false,
-              'st-red': rooms[4].roomStatus === 'booked' && rooms[4].roomFullyBooked === true,
-              'st-green': rooms[4].roomStatus === 'not booked' && rooms[4].roomFullyBooked === false,
-              'st-selected': isActive(4)
-              }" width="45.7" height="45.7" (click)="showRoomDetails(4)" />
+                      'st-blue': rooms[4].roomStatus === 'booked' && rooms[4].roomFullyBooked === false,
+                      'st-red': rooms[4].roomStatus === 'booked' && rooms[4].roomFullyBooked === true,
+                      'st-green': rooms[4].roomStatus === 'not booked' && rooms[4].roomFullyBooked === false,
+                      'st-selected': isActive(4)
+                      }"
+                width="45.7" height="45.7" (click)="showRoomDetails(4)" />
             </g>
             <rect x="375.4" y="256.5" [ngClass]="{
-            'st-blue': rooms[5].roomStatus === 'booked' && rooms[5].roomFullyBooked === false,
-            'st-red': rooms[5].roomStatus === 'booked' && rooms[5].roomFullyBooked === true,
-            'st-green': rooms[5].roomStatus === 'not booked' && rooms[5].roomFullyBooked === false,
-            'st-selected': isActive(5)
-            }" width="45.7" height="45.7" (click)="showRoomDetails(5)" />
+                    'st-blue': rooms[5].roomStatus === 'booked' && rooms[5].roomFullyBooked === false,
+                    'st-red': rooms[5].roomStatus === 'booked' && rooms[5].roomFullyBooked === true,
+                    'st-green': rooms[5].roomStatus === 'not booked' && rooms[5].roomFullyBooked === false,
+                    'st-selected': isActive(5)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(5)" />
           </g>
           <g>
             <polygon class="st-grey" points="375.4,384.4 359.4,384.4 313.8,384.4 252.1,384.4 252.1,407.3 252.1,430.1 252.1,492.8 313.8,492.8 
-    		359.4,492.8 359.4,447.1 359.4,430.1 375.4,430.1 421.1,430.1 421.1,384.4 	" />
+            		359.4,492.8 359.4,447.1 359.4,430.1 375.4,430.1 421.1,430.1 421.1,384.4 	" />
             <rect x="313.8" y="447.1" [ngClass]="{
-            'st-blue': rooms[6].roomStatus === 'booked' && rooms[6].roomFullyBooked === false,
-            'st-red': rooms[6].roomStatus === 'booked' && rooms[6].roomFullyBooked === true,
-            'st-green': rooms[6].roomStatus === 'not booked' && rooms[6].roomFullyBooked === false,
-            'st-selected': isActive(6)
-            }" width="45.7" height="45.7" (click)="showRoomDetails(6)" />
+                    'st-blue': rooms[6].roomStatus === 'booked' && rooms[6].roomFullyBooked === false,
+                    'st-red': rooms[6].roomStatus === 'booked' && rooms[6].roomFullyBooked === true,
+                    'st-green': rooms[6].roomStatus === 'not booked' && rooms[6].roomFullyBooked === false,
+                    'st-selected': isActive(6)
+                    }"
+              width="45.7" height="45.7" (click)="showRoomDetails(6)" />
           </g>
         </svg>
       </div>
       <!-- svg section -->
 
       <!-- room details -->
-      <div class="grid__item grid__item-selectedRoom" *ngIf="selectedRoom">
-        <h3 class="room-name">{{selectedRoom.roomName}} - <small>{{selectedRoom.roomStatus}}</small></h3>
-        {{bookings}}
-        <div class="booked-by" *ngFor="let booking of bookings">
-          <h3>{{booking.meetingName}}</h3>
-          <p>Booked By : {{booking.bookedBy}}</p>
-          <p>Date : {{booking.bookedDate}}</p>
-          <p>Time : {{booking.bookedTimeFrom}} <strong>To</strong> {{booking.bookedTimeTo}}</p>
-        </div>
+      <div class="col-md-4" *ngIf="selectedRoom">
+        <h3 class="room-name">{{selectedRoom.roomName}} - <small>{{selectedRoom.roomStatus}}</small></h3>        
         <p><strong>Room Capacity</strong> : {{selectedRoom.roomCapacity}}</p>
-        <p><strong>Room Facilities</strong> : <br>{{selectedRoom.roomFacilities}}</p>
+        <p><strong>Facilities</strong> : {{selectedRoom.roomFacilities}}</p>
+        
+        <div class="booked-by-container">
+          <div class="booked-by" *ngFor="let booking of dateWiseBookings">
+            <h3>{{booking.meetingName}} <small>Booked By : {{booking.bookedBy}}</small></h3>
+            <p>Date : {{booking.bookedDateFrom}} <strong>To</strong> {{booking.bookedDateTo}}</p>
+            <p>Time : {{booking.bookedTimeFrom}} <strong>To</strong> {{booking.bookedTimeTo}}</p>
+          </div>
+        </div>
       </div>
       <!-- room details -->
 
       <!-- booking form -->
-      <div class="grid__item" *ngIf="selectedRoom">
-        <app-booking-form 
-          [jsonData]="rooms" 
-          [selectedRoom]="selectedRoom" 
-          [parentSubject]="parentSubject"
-          (roomBooked)='changeRoomStatus($event)'>          
+      <div class="col-md-4" *ngIf="selectedRoom">
+        <h3>Book selected room</h3>
+        <app-booking-form [dateTimeForm]="dateTimeForm" [jsonData]="rooms" [selectedRoom]="selectedRoom" [parentSubject]="parentSubject"
+          (roomBooked)='changeRoomStatus($event)'>
         </app-booking-form>
       </div>
       <!-- booking form -->
 
     </div>
+
   </div>
 </div>

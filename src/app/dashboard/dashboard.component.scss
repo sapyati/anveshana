@@ -43,17 +43,17 @@ svg {
   stroke: #9B9B9B;
 }
 .st-blue {
-  fill: #BAE1FF;
+  fill: #3D77B0;
   stroke: #9B9B9B;
   stroke-miterlimit: 10;
 }
 .st-green {
-  fill: #BAFFC9;
+  fill: #03BA3A;
   stroke: #9B9B9B;
   stroke-miterlimit: 10;
 }
 .st-red {
-  fill: #FFB3BA;
+  fill: #BC9034;
   stroke: #9B9B9B;
   stroke-miterlimit: 10;
 }
@@ -64,9 +64,34 @@ svg {
   transition: all 600ms ease;
 }
 
+.booked-by-container {
+  height: 360px;
+  overflow-y: auto;
+}
+
 .booked-by {
-  padding: 5px;
+  padding: 10px;
   background: #BAE1FF;
-  margin-bottom: 15px;
-  line-height: 25px;
+  margin-bottom: 15px;  
+  h3 {
+    margin: 0px;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3D77B0;
+    small {
+      text-transform: capitalize;
+    }
+  }
+  p {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+timepicker table {
+  margin-top: 2px;
 }
