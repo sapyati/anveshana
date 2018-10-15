@@ -3,10 +3,10 @@
   <div class="container">
     <!-- previous bookings table -->
     
-    <div class="row" *ngIf="previousBookings.length" >
+    <div class="row" > <!--*ngIf="previousBookings.length" >-->
       
       <div class="col-md-12">
-        <accordion *ngIf="previousBookings.length">
+        <accordion > <!--*ngIf="previousBookings.length"-->
           <accordion-group heading="View your previous bookings" [isOpen]="isAccordianOpen">
             <table class="table table-bordered table-hover">
               <caption class="booking-caption">Your Bookings</caption>
@@ -31,7 +31,7 @@
                   <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
                   <td>
                     <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="#" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="#" class="btn btn-danger btn-xs pull-right" (click)="!!deleteItem(booking.id)"><i class="fa fa-trash" ></i> Delete</a>
                   </td>
                 </tr>
               </tbody>

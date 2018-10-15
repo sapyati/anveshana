@@ -65,6 +65,14 @@ export class RoomsListService {
       );
   }
 
+  deleteBookings(bookingId){
+    const apiURL = 'http://localhost:3000/roomBookings/' + bookingId;
+    return this.http.delete(apiURL, httpOptions)
+      .pipe(
+        catchError(this.handleError('addBooking', bookingId))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

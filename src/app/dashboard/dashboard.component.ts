@@ -84,6 +84,20 @@ export class DashboardComponent implements OnInit {
     return bookedRoomName[0].roomName;
   }
 
+  deleteItem(id){
+     this.roomListService.deleteBookings(id).subscribe( ()=> console.log("room with id deleted"));
+    
+    
+
+    this.previousBookings.forEach((value : any, index :number) => {
+      if (id == value.id) {
+          this.previousBookings.slice(0,index);
+          console.log(this.previousBookings);
+      }
+  })
+     
+  }
+
   // get bookings data for selected room
   getPreviousBookings(user) {
     this.roomListService.getPreviousBookings(user)
