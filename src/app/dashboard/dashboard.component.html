@@ -2,13 +2,27 @@
 <div class="content">
   <div class="container">
     <!-- previous bookings table -->
-    
-    <div class="row" > <!--*ngIf="previousBookings.length" >-->
+
+    <!--tab view-->
+    <div class="col-xs-12 tab-margin">
+      <ul class="rtab" role="tablist" id="customsTablist">
+        <li id="singletab" class="rtab-item">
+          <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : singletab }"
+                  (click)="bookconference()">Book Now</button>
+        </li>
+        <li id="multipletab" class="rtab-item">
+          <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : multipletab }"
+                  (click)="viewPreviousbook()">View Previous Bookings</button>
+        </li>
+
+      </ul>
+    </div>
+    <!--end of tab view-->
+
+    <div class="row" id="Viewpreviousbook" *ngIf="Viewpreviousbook"> <!--*ngIf="previousBookings.length" >-->
       
       <div class="col-md-12">
-        <accordion > <!--*ngIf="previousBookings.length"-->
-          <accordion-group  heading="View your previous bookings" [isOpen]="isAccordianOpen">
-            <table class="table table-bordered table-hover">
+         <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -35,13 +49,11 @@
                 </tr>
               </tbody>
             </table>
-          </accordion-group>
-        </accordion>
-        
       </div>
     </div>
     <!-- previous bookings table -->
 
+    <div id="bookNow" *ngIf="bookNow">
     <form [formGroup]="dateTimeForm" (ngSubmit)="selectDateTime(dateTimeForm.value)">
       <div class="row">
         <div class="col-xs-12 col-12 col-md-2 form-group">
@@ -187,6 +199,8 @@
       <!-- booking form -->
 
     </div>
+  </div>
+
 
   </div>
 </div>

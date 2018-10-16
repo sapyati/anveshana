@@ -16,8 +16,9 @@ export class DashboardComponent implements OnInit {
   allRoomBookings: any[];
   parentSubject: Subject<any> = new Subject();
   previousBookings: any[];
-  isAccordianOpen = false;
   fromToDateError: boolean;
+  Viewpreviousbook = false;
+  bookNow = true;
   showMap: boolean;
   dateWiseBookings: any[];
   bookingFromTime: Date = new Date();
@@ -238,7 +239,6 @@ export class DashboardComponent implements OnInit {
     );
     this.getPreviousBookings(localStorage.getItem('loggedInUser'));
     this.showMap = false;
-    this.isAccordianOpen = true;
   }
 
   fromDateChanged(fromDate) {
@@ -266,7 +266,14 @@ export class DashboardComponent implements OnInit {
     const toDate = dateTimeForm.bookingDateTo.toLocaleDateString('en-GB');
     this.getAllRoomBookings(fromDate, toDate);
     this.showMap = true;
-    this.isAccordianOpen = false;
+  }
+  bookconference() {
+    this.Viewpreviousbook = false;
+    this.bookNow = true;
+  }
+  viewPreviousbook() {
+    this.bookNow = false;
+    this.Viewpreviousbook = true;
   }
 
 }
