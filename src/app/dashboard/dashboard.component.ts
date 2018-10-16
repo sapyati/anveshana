@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
   Viewpreviousbook = false;
   bookNow = true;
   showMap: boolean;
+  singletab = true;
+  multipletab =  false;
   dateWiseBookings: any[];
   bookingFromTime: Date = new Date();
   bookingToTime: Date = new Date();
@@ -269,10 +271,14 @@ export class DashboardComponent implements OnInit {
   }
   bookconference() {
     this.Viewpreviousbook = false;
+    this.multipletab = false;
+    this.singletab = true;
     this.bookNow = true;
   }
   viewPreviousbook() {
     this.bookNow = false;
+    this.singletab = false;
+    this.multipletab = true;
     this.Viewpreviousbook = true;
   }
 
