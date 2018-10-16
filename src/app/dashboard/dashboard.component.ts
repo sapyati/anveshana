@@ -17,11 +17,9 @@ export class DashboardComponent implements OnInit {
   parentSubject: Subject<any> = new Subject();
   previousBookings: any[];
   isAccordianOpen = false;
-
   fromToDateError: boolean;
   showMap: boolean;
   dateWiseBookings: any[];
-
   bookingFromTime: Date = new Date();
   bookingToTime: Date = new Date();
   toMinDate: Date;
@@ -29,7 +27,6 @@ export class DashboardComponent implements OnInit {
   fromMinDate: Date;
   fromMaxDate: Date;
   minTime: Date = new Date();
-
   dateTimeForm: FormGroup;
 
   constructor(
@@ -42,7 +39,6 @@ export class DashboardComponent implements OnInit {
     this.toMaxDate = new Date();
     this.fromMinDate = new Date();
     this.fromMaxDate = new Date();
-
     this.toMinDate.setDate(this.fromMinDate.getDate());
     this.toMaxDate.setDate(this.fromMaxDate.getDate() + 14);
     this.fromMaxDate.setDate(this.fromMinDate.getDate() + 14);
@@ -84,20 +80,14 @@ export class DashboardComponent implements OnInit {
     return bookedRoomName[0].roomName;
   }
 
-  deleteItem(id){
-     this.roomListService.deleteBookings(id).subscribe( ()=> console.log("room with id deleted"));
-    
-    
-
-    this.previousBookings.forEach((value : any, index :number) => {
-      if (id == value.id) {
-          this.previousBookings.slice(0,index);
+  deleteItem(id) {
+     this.roomListService.deleteBookings(id).subscribe( () => console.log('room with id deleted'));
+    this.previousBookings.forEach((value: any, index: number) => {
+      if (id === value.id) {
+          this.previousBookings.slice(0, index );
           console.log(this.previousBookings);
       }
-  })
-     
-  }
-
+  }); }
   // get bookings data for selected room
   getPreviousBookings(user) {
     this.roomListService.getPreviousBookings(user)

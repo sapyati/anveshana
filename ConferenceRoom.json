@@ -71,7 +71,7 @@
     {
       "id": 6,
       "roomName": "Chennai",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [

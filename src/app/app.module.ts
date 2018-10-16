@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -49,6 +49,7 @@ const appRoutes: Routes = [
     TimepickerModule.forRoot(),
     AccordionModule.forRoot()
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
