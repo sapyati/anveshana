@@ -2,7 +2,11 @@
 <div class="content">
   <div class="container">
     <!-- previous bookings table -->
-
+    <div class="container clearfix">
+      <div class="header__brand">
+        <img src="https://www.mphasis.com/content/dam/mphasis-com/global/logo/logo.png" alt="">
+      </div>
+    </div>
     <!--tab view-->
     <div class="col-xs-12 tab-margin">
       <ul class="rtab" role="tablist" id="customsTablist">
@@ -14,13 +18,11 @@
           <button role="tab" tabindex="0" [ngClass]="{ 'rtab-item--active' : multipletab }"
                   (click)="viewPreviousbook()">View Previous Bookings</button>
         </li>
-
       </ul>
     </div>
     <!--end of tab view-->
 
-    <div class="row" id="Viewpreviousbook" *ngIf="Viewpreviousbook"> <!--*ngIf="previousBookings.length" >-->
-      
+    <div class="row" id="Viewpreviousbook" *ngIf="Viewpreviousbook">
       <div class="col-md-12">
          <table class="table table-bordered table-hover">
               <thead>
@@ -172,13 +174,11 @@
         </svg>
       </div>
       <!-- svg section -->
-
       <!-- room details -->
       <div class="col-md-4" *ngIf="selectedRoom">
         <h3 class="room-name">{{selectedRoom.roomName}} - <small>{{selectedRoom.roomStatus}}</small></h3>        
         <p><strong>Room Capacity</strong> : {{selectedRoom.roomCapacity}}</p>
-        <p><strong>Facilities</strong> : {{selectedRoom.roomFacilities}}</p>
-        
+        <p><strong>Facilities</strong> : {{selectedRoom.roomFacilities}}</p>        
         <div class="booked-by-container">
           <div class="booked-by" *ngFor="let booking of dateWiseBookings">
             <h3>{{booking.meetingName}} <small>Booked By : {{booking.bookedBy}}</small></h3>
@@ -188,7 +188,6 @@
         </div>
       </div>
       <!-- room details -->
-
       <!-- booking form -->
       <div class="col-md-4" *ngIf="selectedRoom">
         <h3>Book selected room</h3>
@@ -197,10 +196,7 @@
         </app-booking-form>
       </div>
       <!-- booking form -->
-
     </div>
   </div>
-
-
   </div>
 </div>
