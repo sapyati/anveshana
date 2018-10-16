@@ -1,3 +1,42 @@
+.header {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  padding: 5px 0px;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d61360+1,48aad9+100 */
+    background: #d61360; /* Old browsers */
+    background: -moz-linear-gradient(left, #d61360 1%, #48aad9 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #d61360 1%,#48aad9 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #d61360 1%,#48aad9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d61360', endColorstr='#48aad9',GradientType=1 ); /* IE6-9 */
+    bottom: -5px;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  }
+  &__brand{
+    width: 100%;
+    height: 38px;
+    padding: 5px 0px;
+    float: left;
+    img {
+      height: 40px;
+      padding-right: 0px;
+      border-left: 0px;
+      float: left;
+    }
+    h3 {
+      margin: 0.4% 12%;
+      padding: 0px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+}
 .grid {
   display: grid;
   grid-gap: 15px;
@@ -94,4 +133,65 @@ svg {
 
 timepicker table {
   margin-top: 2px;
+}
+
+#customsTablist li button {
+  padding-bottom: 12px;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  color: #d91260;
+  font-weight: bold;
+  margin: 0;
+}
+
+.rtab {
+  cursor: pointer;
+  text-align: center;
+  padding-inline-start: inherit;
+  margin: 0 0 5px 0;
+}
+
+.rtab-item {
+  border-bottom: 2px solid #f2f2f2;
+  display: inline-block;
+  font-size: 15px;
+  position: relative;
+  text-align: center;
+  width: 300px;
+  transition: all 0.2s linear;
+  flex: 1;
+}
+
+.rtab-item--after {
+  background-color: #007AB7;
+  content: '';
+  display: block;
+  height: 5px;
+  bottom: -1px;
+  left: 0;
+  position: absolute;
+  transition: all 0.2s linear;
+  opacity: 0;
+  width: 100%;
+}
+
+
+button.rtab-item--active{
+  border-bottom: 5px solid #96c764 !important;
+}
+
+.tabs {
+  list-style: none;
+  padding: 0;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 30px auto;
+  max-width: 615px;
+  font-size: .9rem
+}
+* button:focus{
+  outline:1px dashed #4d148c !important;
 }

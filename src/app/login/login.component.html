@@ -4,17 +4,16 @@
     <div class="container clearfix">
       <div class="header__brand">
         <img src="https://appaccess.mphasis.com/images/Mphasis_Login.png" alt="">
-
       </div>
     </div>
   </div>
-  <br/><br/><br/><br/>
+  <br/>
   <div class="login_container">
   <div class="col-md-4 col-lg-4"></div>
   <div class="col-md-6 col-lg-6">
-    <!--Updated form-->
+    <!--Updated form--><br/><br/>
     <form [formGroup]="rForm" (submit) = loginUser(rForm.value)><br/><br/>
-      <h3 class="comp_name">Sabha</h3><br/><br/><br/>
+      <h3 class="comp_name"></h3><br/><br/>
             <div class="">
               <input type="text" class="" id="emp-id" placeholder="Enter your employee id" formControlName="employeeId">
             </div>
@@ -30,8 +29,8 @@
                                         && rForm.controls['password'].touched">
               This field is required
             </span>
-      <br/><br/><br/>
-            <input type="submit" value="login" class="btn-sabha-login" [disabled]="!rForm.valid">
+      <br/><div class="icon_right"></div>
+            <input type="submit" value="" class="btn-sabha-login" [disabled]="!rForm.valid">
     </form>
 
   </div>

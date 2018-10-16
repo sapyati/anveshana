@@ -16,12 +16,13 @@ export class DashboardComponent implements OnInit {
   allRoomBookings: any[];
   parentSubject: Subject<any> = new Subject();
   previousBookings: any[];
-  isAccordianOpen = false;
-
   fromToDateError: boolean;
+  Viewpreviousbook = false;
+  bookNow = true;
   showMap: boolean;
+  singletab = true;
+  multipletab =  false;
   dateWiseBookings: any[];
-
   bookingFromTime: Date = new Date();
   bookingToTime: Date = new Date();
   toMinDate: Date;
@@ -29,7 +30,6 @@ export class DashboardComponent implements OnInit {
   fromMinDate: Date;
   fromMaxDate: Date;
   minTime: Date = new Date();
-
   dateTimeForm: FormGroup;
 
   constructor(
@@ -42,7 +42,6 @@ export class DashboardComponent implements OnInit {
     this.toMaxDate = new Date();
     this.fromMinDate = new Date();
     this.fromMaxDate = new Date();
-
     this.toMinDate.setDate(this.fromMinDate.getDate());
     this.toMaxDate.setDate(this.fromMaxDate.getDate() + 14);
     this.fromMaxDate.setDate(this.fromMinDate.getDate() + 14);
@@ -84,6 +83,7 @@ export class DashboardComponent implements OnInit {
     return bookedRoomName[0].roomName;
   }
 
+<<<<<<< HEAD
   deleteItem(id, conferenceId) {
 
     this.showMap = false;
@@ -114,6 +114,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+=======
+  deleteItem(id) {
+     this.roomListService.deleteBookings(id).subscribe( () => console.log('room with id deleted'));
+    this.previousBookings.forEach((value: any, index: number) => {
+      if (id === value.id) {
+          this.previousBookings.slice(0, index );
+          console.log(this.previousBookings);
+      }
+  }); }
+>>>>>>> 399b78e68cf049e90fb200846748a1dc33891a97
   // get bookings data for selected room
   getPreviousBookings(user) {
     this.roomListService.getPreviousBookings(user)
@@ -264,7 +274,6 @@ export class DashboardComponent implements OnInit {
     );
     this.getPreviousBookings(localStorage.getItem('loggedInUser'));
     this.showMap = false;
-    this.isAccordianOpen = true;
   }
 
   fromDateChanged(fromDate) {
@@ -292,7 +301,18 @@ export class DashboardComponent implements OnInit {
     const toDate = dateTimeForm.bookingDateTo.toLocaleDateString('en-GB');
     this.getAllRoomBookings(fromDate, toDate);
     this.showMap = true;
-    this.isAccordianOpen = false;
+  }
+  bookconference() {
+    this.Viewpreviousbook = false;
+    this.multipletab = false;
+    this.singletab = true;
+    this.bookNow = true;
+  }
+  viewPreviousbook() {
+    this.bookNow = false;
+    this.singletab = false;
+    this.multipletab = true;
+    this.Viewpreviousbook = true;
   }
 
 }
