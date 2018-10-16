@@ -3,7 +3,7 @@
     {
       "id": 1,
       "roomName": "Memphis",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -16,7 +16,7 @@
     {
       "id": 2,
       "roomName": "Liege",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -30,8 +30,8 @@
     {
       "id": 3,
       "roomName": "Colorado",
-      "roomStatus": "booked",
-      "roomFullyBooked": true,
+      "roomStatus": "not booked",
+      "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
         "AC",
@@ -58,7 +58,7 @@
     {
       "id": 5,
       "roomName": "Amsterdam",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -71,7 +71,7 @@
     {
       "id": 6,
       "roomName": "Chennai",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -109,51 +109,5 @@
       ]
     }
   ],
-  "roomBookings": [
-    {
-      "conferenceId": 1,
-      "id": 1,
-      "bookedBy": "Chaithra",
-      "meetingName": "Meeting",
-      "bookedDate": "27 / 09 / 2018",
-      "bookedTimeFrom": "5: 00 pm",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 1,
-      "id": 2,
-      "bookedBy": "Sandeep",
-      "meetingName": "Demo",
-      "bookedDate": "28 / 09 / 2018",
-      "bookedTimeFrom": "5: 00 pm",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 2,
-      "id": 1,
-      "bookedBy": "Madhuri",
-      "meetingName": "Meeting",
-      "bookedDate": "27 / 09 / 2018",
-      "bookedTimeFrom": "5: 00 pm",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 3,
-      "id": 1,
-      "bookedBy": "Daya Pandey",
-      "meetingName": "Meeting",
-      "bookedDate": "27 / 09 / 2018",
-      "bookedTimeFrom": "10: 00 am",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 5,
-      "bookedBy": "admin",
-      "meetingName": "test",
-      "bookedDate": "",
-      "bookedTimeFrom": "",
-      "bookedTimeTo": "",
-      "id": 3
-    }
-  ]
+  "roomBookings": []
 }
