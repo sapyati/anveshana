@@ -84,18 +84,34 @@ export class DashboardComponent implements OnInit {
     return bookedRoomName[0].roomName;
   }
 
-  deleteItem(id){
-     this.roomListService.deleteBookings(id).subscribe( ()=> console.log("room with id deleted"));
-    
-    
+  deleteItem(id, conferenceId) {
 
-    this.previousBookings.forEach((value : any, index :number) => {
-      if (id == value.id) {
-          this.previousBookings.slice(0,index);
-          console.log(this.previousBookings);
-      }
-  })
-     
+    this.showMap = false;
+
+    this.roomListService.deleteBookings(id).subscribe((data) => {
+
+      this.roomListService.getPreviousBookings(localStorage.getItem('loggedInUser'))
+        .subscribe((previousBookings) => {
+          this.previousBookings = previousBookings;
+          const previousBookingByConferenceId = this.previousBookings.filter(booking => booking.conferenceId === conferenceId);
+          if (previousBookingByConferenceId.length === 0) {
+            const roomStatus = {
+              'roomStatus': 'not booked'
+            };
+            this.roomListService.updateRoomStatus(conferenceId, roomStatus).subscribe(
+              jsonData => {
+                this.selectedRoom = null;
+                for (const room of this.rooms) {
+                  if (conferenceId === room.id) {
+                    room.roomStatus = 'not booked';
+                  }
+                }
+              }
+            );
+          }
+        });
+
+    });
   }
 
   // get bookings data for selected room
