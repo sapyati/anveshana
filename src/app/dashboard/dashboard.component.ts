@@ -31,13 +31,15 @@ export class DashboardComponent implements OnInit {
   fromMaxDate: Date;
   minTime: Date = new Date();
   dateTimeForm: FormGroup;
+  ismeridian: boolean;
+
 
   constructor(
     private roomListService: RoomsListService,
     public app: ChangeDetectorRef,
     private fb: FormBuilder
     ) {
-
+    this.ismeridian = true;
     this.toMinDate = new Date();
     this.toMaxDate = new Date();
     this.fromMinDate = new Date();
@@ -45,10 +47,11 @@ export class DashboardComponent implements OnInit {
     this.toMinDate.setDate(this.fromMinDate.getDate());
     this.toMaxDate.setDate(this.fromMaxDate.getDate() + 14);
     this.fromMaxDate.setDate(this.fromMinDate.getDate() + 14);
-    this.bookingToTime.setMinutes(this.bookingFromTime.getMinutes() + 5);
     this.minTime.setHours(this.bookingFromTime.getHours());
     this.minTime.setMinutes(this.bookingFromTime.getMinutes() + 5);
-
+    this.bookingFromTime.setMinutes(this.bookingFromTime.getMinutes() - this.bookingFromTime.getMinutes() % 5);
+    this.bookingFromTime.setMinutes(this.bookingFromTime.getMinutes() + 5 );
+    this.bookingToTime.setMinutes(this.bookingFromTime.getMinutes() + 5);
     this.dateTimeForm = fb.group({
       'bookingDateFrom': [this.fromMinDate, Validators.compose(
         [Validators.required]

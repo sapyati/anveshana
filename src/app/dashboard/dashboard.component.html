@@ -49,6 +49,9 @@
                     <a href="javascript:;" class="btn btn-danger btn-xs pull-right" (click)="deleteItem(booking.id, booking.conferenceId)"><i class="fa fa-trash" ></i> Delete</a>
                   </td>
                 </tr>
+                <tr>
+                  <td colspan="7" *ngIf="!previousBookings.length" class="text-center">There are no records to display</td>
+                </tr>
               </tbody>
             </table>
       </div>
@@ -72,10 +75,10 @@
           <span *ngIf="fromToDateError">"To Date" can not be less than "From Date". Please select another date.</span>
         </div>
         <div class="col-md-2 form-group col-12 col-xs-12">
-          <timepicker formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event)"></timepicker>
+          <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event)"></timepicker>
         </div>
         <div class="col-md-2 form-group col-12 col-xs-12">
-          <timepicker formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>
+          <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>
         </div>
         <div class="col-md-2 form-group col-12 col-xs-12">
           <button class="btn btn-success" style="margin-top:25px">Search Rooms <i class="fa fa-search"></i></button>

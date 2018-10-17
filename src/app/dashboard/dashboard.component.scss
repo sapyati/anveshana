@@ -85,16 +85,40 @@ svg {
   fill: #3D77B0;
   stroke: #9B9B9B;
   stroke-miterlimit: 10;
+  cursor: pointer;
+}
+.st-blue:hover {
+  fill: rgb(0, 67, 134);
+  transition: all 100ms ease;
+  stroke: #A2CD48;
+  stroke-miterlimit: 10;
+  stroke-width: 3;
 }
 .st-green {
   fill: #03BA3A;
   stroke: #9B9B9B;
   stroke-miterlimit: 10;
+  cursor: pointer;
+}
+.st-green:hover {
+  fill: rgb(0, 139, 42);
+  transition: all 100ms ease;
+  stroke: #A2CD48;
+  stroke-miterlimit: 10;
+  stroke-width: 3;
 }
 .st-red {
   fill: #BC9034;
   stroke: #9B9B9B;
   stroke-miterlimit: 10;
+  cursor: pointer;
+}
+.st-red:hover {
+  fill: rgb(136, 93, 0);
+  transition: all 100ms ease;
+  stroke: #A2CD48;
+  stroke-miterlimit: 10;
+  stroke-width: 3;
 }
 .st-selected {
   stroke: #A2CD48;
