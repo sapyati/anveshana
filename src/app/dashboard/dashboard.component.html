@@ -1,12 +1,16 @@
-<!-- dashboard component -->
-<div class="content">
+<div class="header">
   <div class="container">
-    <!-- previous bookings table -->
-    <div class="container clearfix">
-      <div class="header__brand">
-        <img src="https://www.mphasis.com/content/dam/mphasis-com/global/logo/logo.png" alt="">
-      </div>
+    <div class="header__brand">
+      <img src="../../assets/images/mphasis_logo_black.png" alt="">
     </div>
+    <div class="header__app-name">
+      <img src="../../assets/images/huddle_gradient.png">
+    </div>
+  </div>
+</div>
+<!-- dashboard component -->
+<div class="content" style="margin-top: 50px;">
+  <div class="container">    
     <!--tab view-->
     <div class="col-xs-12 tab-margin">
       <ul class="rtab" role="tablist" id="customsTablist">
@@ -37,19 +41,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let booking of previousBookings; let i = index">
+                <tr *ngFor="let booking of previousBookings; let i = index" @fade>
                   <td>{{ i+1 }}</td>
                   <td>{{ getRoomNameById(booking.conferenceId) }}</td>
                   <td>{{ booking.meetingName }}</td>
                   <td>{{booking.bookedDateFrom}}</td>
                   <td>{{booking.bookedDateTo}}</td>
-                  <td>{{booking.bookedTimeFrom}} to {{booking.bookedTimeTo}}</td>
+                  <td>{{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}</td>
                   <td>
                     <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
                     <a href="javascript:;" class="btn btn-danger btn-xs pull-right" (click)="deleteItem(booking.id, booking.conferenceId)"><i class="fa fa-trash" ></i> Delete</a>
                   </td>
                 </tr>
-                <tr>
+                <tr @fade>
                   <td colspan="7" *ngIf="!previousBookings.length" class="text-center">There are no records to display</td>
                 </tr>
               </tbody>
@@ -73,20 +77,14 @@
             bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="toMinDate"
             [maxDate]="toMaxDate" (bsValueChange)="toDateChanged($event)">
           <span *ngIf="fromToDateError">"To Date" can not be less than "From Date". Please select another date.</span>
-        </div>
-        <div class="col-md-2 form-group col-12 col-xs-12">
-          <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event)"></timepicker>
-        </div>
-        <div class="col-md-2 form-group col-12 col-xs-12">
-          <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>
-        </div>
+        </div>        
         <div class="col-md-2 form-group col-12 col-xs-12">
           <button class="btn btn-success" style="margin-top:25px">Search Rooms <i class="fa fa-search"></i></button>
         </div>
       </div>
     </form>
 
-    <div class="row" *ngIf="showMap" id="room-details-booking">
+    <div class="row" *ngIf="showMap" id="room-details-booking" @fade>
       <!-- svg section -->
       <div class="col-md-4" *ngIf="rooms && dateTimeForm.valid">
         <h3>Please click a room to select</h3>
@@ -186,7 +184,7 @@
           <div class="booked-by" *ngFor="let booking of dateWiseBookings">
             <h3>{{booking.meetingName}} <small>Booked By : {{booking.bookedBy}}</small></h3>
             <p>Date : {{booking.bookedDateFrom}} <strong>To</strong> {{booking.bookedDateTo}}</p>
-            <p>Time : {{booking.bookedTimeFrom}} <strong>To</strong> {{booking.bookedTimeTo}}</p>
+            <p>Time : {{booking.bookedTimeFrom | date: 'h:mm a'}} <strong>To</strong> {{booking.bookedTimeTo | date: 'h:mm a'}}</p>
           </div>
         </div>
       </div>
@@ -194,7 +192,7 @@
       <!-- booking form -->
       <div class="col-md-4" *ngIf="selectedRoom">
         <h3>Book selected room</h3>
-        <app-booking-form [dateTimeForm]="dateTimeForm" [jsonData]="rooms" [selectedRoom]="selectedRoom" [parentSubject]="parentSubject"
+        <app-booking-form [dateWiseBookings]="dateWiseBookings" [dateTimeForm]="dateTimeForm" [jsonData]="rooms" [selectedRoom]="selectedRoom" [parentSubject]="parentSubject"
           (roomBooked)='changeRoomStatus($event)'>
         </app-booking-form>
       </div>

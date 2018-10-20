@@ -12,20 +12,39 @@ import { ToastrService } from 'ngx-toastr';
 export class BookingFormComponent implements OnInit, OnDestroy {
 
   @Input() jsonData: any;
+  @Input() dateWiseBookings: any;
   @Input() dateTimeForm: any;
   @Input() selectedRoom: any;
   @Input() parentSubject: Subject<any>;
   @Output() roomBooked = new EventEmitter();
 
   rForm: FormGroup;
+  ismeridian: boolean;
+  minTime: Date = new Date();
+  bookingFromTime: Date = new Date();
+  bookingToTime: Date = new Date();
 
   constructor(private fb: FormBuilder, private roomListService: RoomsListService, private toastr: ToastrService) {
+
+    this.ismeridian = true;
+    this.minTime.setHours(this.bookingFromTime.getHours());
+    this.minTime.setMinutes(this.bookingFromTime.getMinutes() + 5);
+    this.bookingFromTime.setMinutes(this.bookingFromTime.getMinutes() - this.bookingFromTime.getMinutes() % 5);
+    this.bookingFromTime.setMinutes(this.bookingFromTime.getMinutes() + 5);
+    this.bookingToTime.setMinutes(this.bookingFromTime.getMinutes() + 5);
+
     this.rForm = fb.group({
       'meetingName': [null, Validators.compose(
         [Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50)
         ]
+      )],
+      'bookedTimeFrom': [this.bookingFromTime, Validators.compose(
+        [Validators.required]
+      )],
+      'bookedTimeTo': [this.bookingToTime, Validators.compose(
+        [Validators.required]
       )]
     });
   }
@@ -40,8 +59,8 @@ export class BookingFormComponent implements OnInit, OnDestroy {
       'meetingName': post.meetingName,
       'bookedDateFrom': this.dateTimeForm.value.bookingDateFrom.toLocaleDateString('en-GB'),
       'bookedDateTo': this.dateTimeForm.value.bookingDateTo.toLocaleDateString('en-GB'),
-      'bookedTimeFrom': this.dateTimeForm.value.bookedTimeFrom.toLocaleTimeString('en-GB'),
-      'bookedTimeTo': this.dateTimeForm.value.bookedTimeTo.toLocaleTimeString('en-GB')
+      'bookedTimeFrom': post.bookedTimeFrom,
+      'bookedTimeTo': post.bookedTimeTo
     };
     console.log(postData);
     this.roomListService.addBooking(this.selectedRoom.id, postData).subscribe(
@@ -76,6 +95,15 @@ export class BookingFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // unsubscribe to parent subject
     this.parentSubject.unsubscribe();
+  }
+
+  // bookedTimeFrom
+
+  fromTimeChanged(fromTime, toTime) {
+  }
+
+  toTimeChanged(toTime) {
+    // this.showMap = false;
   }
 
 

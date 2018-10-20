@@ -114,10 +114,10 @@
       "conferenceId": 5,
       "bookedBy": "admin",
       "meetingName": "test",
-      "bookedDateFrom": "17/10/2018",
-      "bookedDateTo": "17/10/2018",
-      "bookedTimeFrom": "09:25:46",
-      "bookedTimeTo": "09:30:46",
+      "bookedDateFrom": "20/10/2018",
+      "bookedDateTo": "20/10/2018",
+      "bookedTimeFrom": "2018-10-20T14:05:54.849Z",
+      "bookedTimeTo": "2018-10-20T14:10:54.849Z",
       "id": 1
     }
   ]

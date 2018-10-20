@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { BookingFormComponent } from '../booking-form/booking-form.component';
 import { Router } from '@angular/router';
+import { BsDatepickerModule, TimepickerModule, AccordionModule } from 'ngx-bootstrap';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,15 +15,15 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     mockRouter = { navigate: jasmine.createSpy('navigate') };
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes([
+      imports: [FormsModule, BsDatepickerModule, TimepickerModule, ReactiveFormsModule, RouterTestingModule.withRoutes([
         { path: 'dashboard', component: DashboardComponent }
-      ]) ],
-      declarations: [LoginComponent, DashboardComponent, BookingFormComponent ],
+      ])],
+      declarations: [LoginComponent, DashboardComponent, BookingFormComponent],
       providers: [
         { provide: Router, useValue: mockRouter },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

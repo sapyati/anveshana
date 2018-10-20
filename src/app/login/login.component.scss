@@ -1,8 +1,7 @@
-
 .header {
+  background-color: #183d54;
   width: 100%;
   height: auto;
-  background: #fff;
   padding: 5px 0px;
   position: relative;
   &:after {
@@ -21,7 +20,7 @@
   }
   &__brand{
     width: 100%;
-    height: 50px;
+    height: auto;
     padding: 5px 0px;
     float: left;
     img {
@@ -30,157 +29,52 @@
       border-left: 0px;
       float: left;
     }
-    h3 {
-      margin: 0.4% 12%;
-      padding: 0px;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
   }
 }
 
-@media only screen and (max-width: 640px) {
-  .header {
-    &__brand{
-      width: 100%;
-      height: auto;
-      padding: 5px 5px;
-      img {
-        height: 35px;
-        padding-right: 10px;
-      }
-      h3 {
-        line-height: 35px;
-        margin-left: 10px;
-        font-size: 14px;
-      }
-    }
-  }
+.content {
+  background-color: #183d54;
+  height: 100vh;
+  padding-top: 75px;
 }
 
-form {
+.login-container {
   border: 1px solid white;
   background: #d4d4d4;
-  padding: 0px 65px;
   text-align: left;
-  width: 60%;
-  border-radius: 6px;
-  box-shadow: 5px 5px #3e3e3e;
-  height: 389px;
-}
-
-label {
-  display: block;
+  border-radius: 4px;
+  padding: 20px 20px 80px 20px;
+  height: auto;
   position: relative;
-  margin: 40px 0px;
-}
-.back-log{
-// background-image: url('../../assets/images/Small-meeting-rooms-design.png');
-padding-top: 5px;
-background-color: #183d54;
-width: 100%;
-height: 700px;
-// height: 695px;
-}
-input {
-  width: 100%;
-  padding: 10px;
-  background: #fff;
-  border: none;
-  outline: none;
-}
-
-.line-box {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  background: #BCBCBC;
-}
-
-.line {
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #8BC34A;
-  transition: ease .6s;
-}
-
-input:focus + .line-box .line {
-  width: 100%;
-}
-
-.label-txt {
-  position: absolute;
-  top: -1.6em;
-  padding: 10px;
-  font-family: sans-serif;
-  font-size: .8em;
-  letter-spacing: 1px;
-  color: rgb(120,120,120);
-  transition: ease .3s;
-}
-
-.label-active {
-  top: -3em;
-}
-
-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background: rgb(220,220,220);
-  font-weight: bold;
-  color: rgb(120,120,120);
-  border: none;
-  outline: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: ease .3s;
-}
-
-button:hover {
-  background: #8BC34A;
-  color: #ffffff;
-}
-.comp_name{
-  width: 250px;
-  height: 77px;
-  background-image: url('../../assets/images/huddle.png');
-  margin: 0 auto;
-}
-.btn-sabha-login{
-  font-size: 1.8em;
-  width: 65px;
-  height: 65px;
-  border-radius: 65px;
-  font-weight: bold;
-  float: right;
-  margin: 0% -39%;
-  background-color: #85ad37;
-}
-.icon_right{
-  width: 0;
-  height: 0;
-  border: 0 solid transparent;
-  border-bottom-width: 10px;
-  border-top-width: 10px;
-  border-left: 10px solid white;
-  float: right;
-  position: absolute;
-  margin: 3.3% 46.7%;
-}
-
-
-@media only screen and (max-width: 600px) {
-  form[_ngcontent-c1] {
-    margin-left: 3%;
-    background: #3e3e3e;
-    padding: 1px 68px;
-    text-align: left;
-    box-shadow: 4px 3px 3px #030202;
-    width: 100%;
-    height: 434px;
+  img {
+    display: block;
+    margin: 0px auto 20px auto;
   }
 }
+
+.btn-sabha-login[disabled]:hover, .btn-sabha-login[disabled] {
+  background-color: #ad7a37;
+  cursor: not-allowed;
+}
+
+.btn-sabha-login{
+  font-size: 1.8em;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  font-weight: bold;  
+  background-color: #85ad37;
+  position: absolute;
+  bottom: 20px;
+  right: -30px;
+  border: 0px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.btn-sabha-login:hover {
+  background-color: #689411;
+  transition: all 100ms ease;
+  cursor: pointer;
+}
+

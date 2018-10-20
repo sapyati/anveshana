@@ -2,7 +2,23 @@
   <!-- room select  -->
   <p><strong>Selected Room</strong> : {{selectedRoom.roomName}}</p>
   <p><strong>Selected Date</strong> : {{dateTimeForm.value.bookingDateFrom | date:'dd/MM/yyyy' }} <strong>to</strong> {{dateTimeForm.value.bookingDateTo | date:'dd/MM/yyyy' }}</p>
-  <p><strong>Selected Time</strong> : {{dateTimeForm.value.bookedTimeFrom | date:'HH:mm a' }} <strong>to</strong> {{dateTimeForm.value.bookedTimeTo | date:'HH:mm a' }}</p>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <!-- from time -->
+      <div class="form-group" [ngClass]="{'has-error': !rForm.controls['bookedTimeFrom'].valid && rForm.controls['bookedTimeFrom'].touched}">
+        <label for="meetingName">Select From Time</label>
+        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event, rForm.controls['bookedTimeTo'].value)"></timepicker>        
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- to time -->
+      <div class="form-group" [ngClass]="{'has-error': !rForm.controls['bookedTimeTo'].valid && rForm.controls['bookedTimeTo'].touched}">
+        <label for="meetingName">Select To Time</label>
+        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>        
+      </div>
+    </div>
+  </div>
 
   <!-- meeting/conference name -->
   <div class="form-group" [ngClass]="{'has-error': !rForm.controls['meetingName'].valid && rForm.controls['meetingName'].touched}">

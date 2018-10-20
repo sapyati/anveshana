@@ -65,7 +65,7 @@ export class RoomsListService {
       );
   }
 
-  deleteBookings(bookingId){
+  deleteBookings(bookingId) {
     const apiURL = 'http://localhost:3000/roomBookings/' + bookingId;
     return this.http.delete(apiURL, httpOptions)
       .pipe(
