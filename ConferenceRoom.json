@@ -3,7 +3,7 @@
     {
       "id": 1,
       "roomName": "Memphis",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -30,7 +30,7 @@
     {
       "id": 3,
       "roomName": "Colorado",
-      "roomStatus": "not booked",
+      "roomStatus": "booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -58,7 +58,7 @@
     {
       "id": 5,
       "roomName": "Amsterdam",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -107,18 +107,55 @@
         "Adapters & Cables",
         "Audio/Speakers"
       ]
+    },
+    {
+      "id": 8,
+      "roomName": "Infinity",
+      "roomStatus": "not booked",
+      "roomFullyBooked": false,
+      "roomCapacity": "4pc",
+      "roomFacilities": [
+        "AC",
+        "TV",
+        "Adapters & Cables",
+        "Audio/Speakers"
+      ]
+    },
+    {
+      "id": 9,
+      "roomName": "Matrix",
+      "roomStatus": "not booked",
+      "roomFullyBooked": false,
+      "roomCapacity": "4pc",
+      "roomFacilities": [
+        "AC",
+        "TV",
+        "Internet",
+        "Conference Phone",
+        "Projectors"
+      ]
     }
   ],
   "roomBookings": [
     {
-      "conferenceId": 5,
+      "conferenceId": 1,
       "bookedBy": "admin",
       "meetingName": "test",
-      "bookedDateFrom": "20/10/2018",
-      "bookedDateTo": "20/10/2018",
-      "bookedTimeFrom": "2018-10-20T14:05:54.849Z",
-      "bookedTimeTo": "2018-10-20T14:10:54.849Z",
+      "bookedDateFrom": "21/10/2018",
+      "bookedDateTo": "21/10/2018",
+      "bookedTimeFrom": "2018-10-21T12:10:56.762Z",
+      "bookedTimeTo": "2018-10-21T12:15:56.762Z",
       "id": 1
+    },
+    {
+      "conferenceId": 3,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDateFrom": "21/10/2018",
+      "bookedDateTo": "21/10/2018",
+      "bookedTimeFrom": "2018-10-21T12:20:26.220Z",
+      "bookedTimeTo": "2018-10-21T12:25:26.220Z",
+      "id": 2
     }
   ]
 }
