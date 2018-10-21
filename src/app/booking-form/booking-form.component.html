@@ -10,12 +10,15 @@
         <label for="meetingName">Select From Time</label>
         <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event, rForm.controls['bookedTimeTo'].value)"></timepicker>        
       </div>
-    </div>
+    </div>    
+  </div>
+
+  <div class="row">
     <div class="col-md-6">
       <!-- to time -->
       <div class="form-group" [ngClass]="{'has-error': !rForm.controls['bookedTimeTo'].valid && rForm.controls['bookedTimeTo'].touched}">
         <label for="meetingName">Select To Time</label>
-        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>        
+        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>
       </div>
     </div>
   </div>

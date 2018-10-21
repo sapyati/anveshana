@@ -24,7 +24,7 @@
     padding: 5px 0px;
     float: left;
     img {
-      height: 61px;
+      height: 40px;
       padding-right: 0px;
       border-left: 0px;
       float: left;
@@ -34,7 +34,7 @@
 
 .content {
   background-color: #183d54;
-  height: 100vh;
+  height: calc(100vh - 100px);
   padding-top: 75px;
 }
 
@@ -76,5 +76,53 @@
   background-color: #689411;
   transition: all 100ms ease;
   cursor: pointer;
+}
+
+.c-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px; /* Set the fixed height of the footer here */
+  background-color: #24597a;
+  &__copy-text {
+    margin-bottom: 0px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d61360+1,48aad9+100 */
+    background: #43A8DA; /* Old browsers */
+    background: -moz-linear-gradient(left, #43A8DA 1%, #A0CB4A 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #43A8DA 1%,#A0CB4A 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #43A8DA 1%,#A0CB4A 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#43A8DA', endColorstr='#A0CB4A',GradientType=1 ); /* IE6-9 */
+    top: -5px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .btn-sabha-login{
+    font-size: 1.8em;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    font-weight: bold;  
+    background-color: #85ad37;
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    border: 0px;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    outline: none;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  
 }
 

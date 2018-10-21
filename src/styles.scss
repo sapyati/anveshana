@@ -12,6 +12,11 @@ html {
   min-height: 100%;
 }
 
+body {
+  margin-bottom: 40px; /* Margin bottom by footer height */
+  background: #F1F3F4;
+}
+
 body, html {
   font-family: 'Raleway', sans-serif;
 }
@@ -26,17 +31,11 @@ body, html {
 
 
 @media only screen and (max-width: 640px) {
-  .content {
-    margin-top: 20px;
-    padding: 10px;
-  }
+  
 }
 
 @media only screen and (min-width: 641px) and (max-width: 1200px) {
-  .content {
-    margin-top: 20px;
-    padding: 10px;
-  }
+  
 }
 
 timepicker table {

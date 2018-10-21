@@ -26,17 +26,25 @@ export class DashboardComponent implements OnInit {
   parentSubject: Subject<any> = new Subject();
   previousBookings: any[];
   fromToDateError: boolean;
-  Viewpreviousbook = false;
-  bookNow = true;
-  showMap: boolean;
-  singletab = true;
-  multipletab =  false;
   dateWiseBookings: any[];
   toMinDate: Date;
   toMaxDate: Date;
   fromMinDate: Date;
   fromMaxDate: Date;
   dateTimeForm: FormGroup;
+  user: string;
+  showMap: boolean;
+
+  // Viewpreviousbook = false;
+  // bookNow = true;
+  // showMap: boolean;
+  // singletab = true;
+  // multipletab = false;
+
+  myBookings = false;
+  bookNow = true;
+  myBookingsTab = false;
+  bookNowTab = true;
 
   constructor(
     private roomListService: RoomsListService,
@@ -65,6 +73,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getRooms();
     this.getPreviousBookings(localStorage.getItem('loggedInUser'));
+    this.user = localStorage.getItem('loggedInUser');
   }
 
   // get rooms data
@@ -277,17 +286,31 @@ export class DashboardComponent implements OnInit {
     this.getAllRoomBookings(fromDate, toDate);
     this.showMap = true;
   }
-  bookconference() {
-    this.Viewpreviousbook = false;
-    this.multipletab = false;
-    this.singletab = true;
+
+  // bookConference() {
+  //   this.Viewpreviousbook = false;
+  //   this.multipletab = false;
+  //   this.singletab = true;
+  //   this.bookNow = true;
+  // }
+  // viewPreviousbookings() {
+  //   this.bookNow = false;
+  //   this.singletab = false;
+  //   this.multipletab = true;
+  //   this.Viewpreviousbook = true;
+  // }
+
+  bookConference() {
+    this.bookNowTab = true;
+    this.myBookingsTab = false;
+    this.myBookings = false;
     this.bookNow = true;
   }
-  viewPreviousbook() {
+  viewPreviousbookings() {
+    this.bookNowTab = false;
+    this.myBookingsTab = true;
     this.bookNow = false;
-    this.singletab = false;
-    this.multipletab = true;
-    this.Viewpreviousbook = true;
+    this.myBookings = true;
   }
 
 }
