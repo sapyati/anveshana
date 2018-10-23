@@ -1,8 +1,7 @@
-
 .header {
+  background-color: #183d54;
   width: 100%;
   height: auto;
-  background: #fff;
   padding: 5px 0px;
   position: relative;
   &:after {
@@ -21,158 +20,109 @@
   }
   &__brand{
     width: 100%;
-    height: 50px;
+    height: auto;
     padding: 5px 0px;
     float: left;
     img {
-      height: 61px;
+      height: 40px;
       padding-right: 0px;
       border-left: 0px;
       float: left;
     }
-    h3 {
-      margin: 0.4% 12%;
-      padding: 0px;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
   }
 }
 
-@media only screen and (max-width: 640px) {
-  .header {
-    &__brand{
-      width: 100%;
-      height: auto;
-      padding: 5px 5px;
-      img {
-        height: 35px;
-        padding-right: 10px;
-      }
-      h3 {
-        line-height: 35px;
-        margin-left: 10px;
-        font-size: 14px;
-      }
-    }
-  }
+.content {
+  background-color: #183d54;
+  height: calc(100vh - 100px);
+  padding-top: 75px;
 }
 
-
-
-
-form {
-  margin-left: 3%;
-  background: #3e3e3e;
-  padding: 1px 68px;
+.login-container {
+  border: 1px solid white;
+  background: #d4d4d4;
   text-align: left;
-  box-shadow: 4px 3px 3px #030202;
-  width: 67%;
-  height: 480px;
-}
-
-label {
-  display: block;
+  border-radius: 4px;
+  padding: 20px 20px 80px 20px;
+  height: auto;
   position: relative;
-  margin: 40px 0px;
-}
-.back-log{background-image: url('../../assets/images/Small-meeting-rooms-design.png');
-padding-top: 5px;
-width: 100%;
-height: 695px;}
-input {
-  width: 100%;
-  padding: 10px;
-  background: #fff;
-  border: none;
-  outline: none;
-}
-
-.line-box {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  background: #BCBCBC;
-}
-
-.line {
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #8BC34A;
-  transition: ease .6s;
-}
-
-input:focus + .line-box .line {
-  width: 100%;
-}
-
-.label-txt {
-  position: absolute;
-  top: -1.6em;
-  padding: 10px;
-  font-family: sans-serif;
-  font-size: .8em;
-  letter-spacing: 1px;
-  color: rgb(120,120,120);
-  transition: ease .3s;
-}
-
-.label-active {
-  top: -3em;
-}
-
-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background: rgb(220,220,220);
-  font-weight: bold;
-  color: rgb(120,120,120);
-  border: none;
-  outline: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: ease .3s;
-}
-
-button:hover {
-  background: #8BC34A;
-  color: #ffffff;
-}
-.comp_name{
-  font-size: 3.3em;
-  letter-spacing: 3px;
-  background: -webkit-linear-gradient(#fff, #9fffb2);
-  -webkit-background-clip: text;
-  color: #d4ffbf;
-  -webkit-text-fill-color: transparent;
-  font-family: serif;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;}
-.btn-sabha-login{
-  color: #fff;
-  background-image: linear-gradient(#9d075b, #004a70);
-  font-size: 1.8em;
-  text-transform: capitalize;
-  letter-spacing: 5px;
-  font-weight: bold;
-  background-color: #a2cd4d;
-  border-radius: 0px;
-}
-
-
-@media only screen and (max-width: 600px) {
-  form[_ngcontent-c1] {
-    margin-left: 3%;
-    background: #3e3e3e;
-    padding: 1px 68px;
-    text-align: left;
-    box-shadow: 4px 3px 3px #030202;
-    width: 100%;
-    height: 434px;
+  img {
+    display: block;
+    margin: 0px auto 20px auto;
   }
 }
+
+.btn-sabha-login[disabled]:hover, .btn-sabha-login[disabled] {
+  background-color: #ad7a37;
+  cursor: not-allowed;
+}
+
+.btn-sabha-login{
+  font-size: 1.8em;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  font-weight: bold;  
+  background-color: #85ad37;
+  position: absolute;
+  bottom: 20px;
+  right: -30px;
+  border: 0px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.btn-sabha-login:hover {
+  background-color: #689411;
+  transition: all 100ms ease;
+  cursor: pointer;
+}
+
+.c-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px; /* Set the fixed height of the footer here */
+  background-color: #24597a;
+  &__copy-text {
+    margin-bottom: 0px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d61360+1,48aad9+100 */
+    background: #43A8DA; /* Old browsers */
+    background: -moz-linear-gradient(left, #43A8DA 1%, #A0CB4A 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #43A8DA 1%,#A0CB4A 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #43A8DA 1%,#A0CB4A 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#43A8DA', endColorstr='#A0CB4A',GradientType=1 ); /* IE6-9 */
+    top: -5px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .btn-sabha-login{
+    font-size: 1.8em;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    font-weight: bold;  
+    background-color: #85ad37;
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    border: 0px;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    outline: none;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  
+}
+

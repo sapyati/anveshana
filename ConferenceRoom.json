@@ -3,7 +3,7 @@
     {
       "id": 1,
       "roomName": "Memphis",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -16,7 +16,7 @@
     {
       "id": 2,
       "roomName": "Liege",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -31,7 +31,7 @@
       "id": 3,
       "roomName": "Colorado",
       "roomStatus": "booked",
-      "roomFullyBooked": true,
+      "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
         "AC",
@@ -44,7 +44,7 @@
     {
       "id": 4,
       "roomName": "Mumbai",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -58,7 +58,7 @@
     {
       "id": 5,
       "roomName": "Amsterdam",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -71,7 +71,7 @@
     {
       "id": 6,
       "roomName": "Chennai",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -85,7 +85,7 @@
     {
       "id": 7,
       "roomName": "Pune",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -98,7 +98,7 @@
     {
       "id": 8,
       "roomName": "Mysore",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -107,98 +107,55 @@
         "Adapters & Cables",
         "Audio/Speakers"
       ]
+    },
+    {
+      "id": 8,
+      "roomName": "Infinity",
+      "roomStatus": "not booked",
+      "roomFullyBooked": false,
+      "roomCapacity": "4pc",
+      "roomFacilities": [
+        "AC",
+        "TV",
+        "Adapters & Cables",
+        "Audio/Speakers"
+      ]
+    },
+    {
+      "id": 9,
+      "roomName": "Matrix",
+      "roomStatus": "not booked",
+      "roomFullyBooked": false,
+      "roomCapacity": "4pc",
+      "roomFacilities": [
+        "AC",
+        "TV",
+        "Internet",
+        "Conference Phone",
+        "Projectors"
+      ]
     }
   ],
   "roomBookings": [
     {
-      "conferenceId": 1,
-      "id": 1,
-      "bookedBy": "Chaithra",
-      "meetingName": "Meeting",
-      "bookedDate": "27 / 09 / 2018",
-      "bookedTimeFrom": "5: 00 pm",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 1,
-      "id": 2,
-      "bookedBy": "Sandeep",
-      "meetingName": "Demo",
-      "bookedDate": "28 / 09 / 2018",
-      "bookedTimeFrom": "5: 00 pm",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 2,
-      "id": 1,
-      "bookedBy": "Madhuri",
-      "meetingName": "Meeting",
-      "bookedDate": "27 / 09 / 2018",
-      "bookedTimeFrom": "5: 00 pm",
-      "bookedTimeTo": "5: 30 pm"
+      "conferenceId": 3,
+      "bookedBy": "admin",
+      "meetingName": "test",
+      "bookedDateFrom": "24/10/2018",
+      "bookedDateTo": "25/10/2018",
+      "bookedTimeFrom": "2018-10-21T12:10:56.762Z",
+      "bookedTimeTo": "2018-10-21T12:15:56.762Z",
+      "id": 1
     },
     {
       "conferenceId": 3,
-      "id": 1,
-      "bookedBy": "Daya Pandey",
-      "meetingName": "Meeting",
-      "bookedDate": "27 / 09 / 2018",
-      "bookedTimeFrom": "10: 00 am",
-      "bookedTimeTo": "5: 30 pm"
-    },
-    {
-      "conferenceId": 8,
       "bookedBy": "admin",
       "meetingName": "test",
-      "bookedDate": "",
-      "bookedTimeFrom": "",
-      "bookedTimeTo": "",
-      "id": 3
-    },
-    {
-      "conferenceId": 6,
-      "bookedBy": "admin",
-      "meetingName": "test",
-      "bookedDate": null,
-      "bookedTimeFrom": null,
-      "bookedTimeTo": null,
-      "id": 4
-    },
-    {
-      "conferenceId": 5,
-      "bookedBy": "admin",
-      "meetingName": "test",
-      "bookedDate": null,
-      "bookedTimeFrom": null,
-      "bookedTimeTo": null,
-      "id": 5
-    },
-    {
-      "conferenceId": 7,
-      "bookedBy": "admin",
-      "meetingName": "test",
-      "bookedDate": null,
-      "bookedTimeFrom": null,
-      "bookedTimeTo": null,
-      "id": 6
-    },
-    {
-      "conferenceId": 4,
-      "bookedBy": "admin",
-      "meetingName": "sdfsdf",
-      "bookedDate": null,
-      "bookedTimeFrom": null,
-      "bookedTimeTo": null,
-      "id": 7
-    },
-    {
-      "conferenceId": 6,
-      "bookedBy": "admin",
-      "meetingName": "test",
-      "bookedDate": "",
-      "bookedTimeFrom": "",
-      "bookedTimeTo": "",
-      "id": 8
+      "bookedDateFrom": "23/10/2018",
+      "bookedDateTo": "23/10/2018",
+      "bookedTimeFrom": "2018-10-23T04:35:07.157Z",
+      "bookedTimeTo": "2018-10-23T04:40:07.157Z",
+      "id": 2
     }
   ]
 }

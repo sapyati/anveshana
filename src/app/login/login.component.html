@@ -1,39 +1,43 @@
+<div class="header">
+  <div class="container">
+    <div class="header__brand">
+      <img src="../../assets/images/mphasis_logo_color.png" alt="">
+    </div>    
+  </div>
+</div>
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
 
-<div class="container back-log  col-lg-12 col-md-12">
-
-    <div class="container clearfix">
-      <div class="header__brand">
-        <img src="https://appaccess.mphasis.com/images/Mphasis_Login.png" alt="">
+        <div class="login-container z-depth-3">
+          <img src="../../assets/images/huddle.png"> 
+          <form [formGroup]="rForm" (submit)=loginUser(rForm.value)>
+            <div class="form-group">
+              <input type="text" class="form-control" id="emp-id" placeholder="Enter your employee id" formControlName="employeeId">
+              <span class="help-block" *ngIf="!rForm.controls['employeeId'].valid
+                        && rForm.controls['employeeId'].touched">
+                This field is required</span>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="password" placeholder="Enter your password" formControlName="password">
+              <span class="help-block" *ngIf="!rForm.controls['password'].valid
+                                  && rForm.controls['password'].touched">
+                This field is required</span>
+            </div>
+            <button class="btn-sabha-login z-depth-4" [disabled]="!rForm.valid">
+              <i class="fa fa-send" style="color: #fff"></i>
+            </button>
+          </form>
+        </div>
 
       </div>
     </div>
-  <br/><br/><br/><br/>
-  <div class="login_container">
-  <div class="col-md-4 col-lg-4"></div>
-  <div class="col-md-6 col-lg-6">
-    <!--Updated form-->
-    <form [formGroup]="rForm" (submit) = loginUser(rForm.value)><br/><br/>
-      <h3 class="comp_name">Sabha</h3><br/><br/><br/>
-            <div class="">
-              <input type="text" class="" id="emp-id" placeholder="Enter your employee id" formControlName="employeeId">
-            </div>
-            <span class="help-block" *ngIf="!rForm.controls['employeeId'].valid
-                            && rForm.controls['employeeId'].touched">
-              This field is required
-            </span>
-      <br/>
-            <div class="">
-              <input type="password" class="" id="password" placeholder="Enter your password" formControlName="password">
-            </div>
-            <span class="help-block" *ngIf="!rForm.controls['password'].valid
-                                        && rForm.controls['password'].touched">
-              This field is required
-            </span>
-      <br/><br/><br/>
-            <input type="submit" value="login" class="btn-sabha-login" [disabled]="!rForm.valid">
-    </form>
-
   </div>
-  <div class="col-md-2 col-lg-2"></div>
+</div>
+
+<div class="c-footer">
+  <div class="container clearfix">
+    <p class="c-footer__copy-text">Mphasis | All rights reserved</p>
   </div>
 </div>
