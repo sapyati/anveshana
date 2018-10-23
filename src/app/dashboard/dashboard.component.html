@@ -48,7 +48,11 @@
                     <td>{{booking.bookedDateTo}}</td>
                     <td>{{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}</td>
                     <td>
+<<<<<<< HEAD
                       <a href="javascript:;" class="btn btn-primary btn-xs" (click)="editDate(booking)"><i class="fa fa-edit"></i> Edit</a>
+=======
+                      <a href="#" class="btn btn-primary btn-xs" (click)="!!editConference(booking)"><i class="fa fa-edit"></i> Edit</a>
+>>>>>>> b744f3a2000304ee8a3d64e9a80b25af43c264e1
                       <a href="javascript:;" class="btn btn-danger btn-xs pull-right" (click)="deleteItem(booking.id, booking.conferenceId)"><i
                           class="fa fa-trash"></i> Delete</a>
                     </td>
@@ -65,7 +69,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                <form [formGroup]="dateTimeForm" class="dateTimeForm" (ngSubmit)="selectDateTime(dateTimeForm.value)">
+                <form [formGroup]="dateTimeForm" class="dateTimeForm" (ngSubmit)="selectDateTime(dateTimeForm.controls['bookingDateFrom'].value,dateTimeForm.controls['bookingDateTo'].value,true)">
                   <div class="row">
                     <div class="col-xs-12 col-12 col-md-2 form-group">
                       <label for="bookedDateFrom">From Date</label>
@@ -3517,7 +3521,7 @@
                                                                                                         'st-green': rooms[3].roomStatus === 'not booked' && rooms[3].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(3)
                                                                                                         }"
-                            (click)="showRoomDetails(3)" />
+                            (click)="showRoomDetails(3,true)" />
                           <polygon class="st2" points="465.9,207.6 452.6,207.6 375.9,207.6 375.9,297.6 452.6,297.6 465.9,297.6 555.9,297.6 555.9,207.6"
                             [ngClass]="{
                                                                                                         'st-blue': rooms[2].roomStatus === 'booked' && rooms[2].roomFullyBooked === false,
@@ -3525,7 +3529,7 @@
                                                                                                         'st-green': rooms[2].roomStatus === 'not booked' && rooms[2].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(2)
                                                                                                         }"
-                            (click)="showRoomDetails(2)" />
+                            (click)="showRoomDetails(2,true)" />
                           <polygon class="st2" points="286,297.6 272.6,297.6 196,297.6 196,387.6 272.6,387.6 286,387.6 375.9,387.6 375.9,297.6"
                             [ngClass]="{
                                                                                                         'st-blue': rooms[4].roomStatus === 'booked' && rooms[4].roomFullyBooked === false,
@@ -3533,14 +3537,14 @@
                                                                                                         'st-green': rooms[4].roomStatus === 'not booked' && rooms[4].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(4)
                                                                                                         }"
-                            (click)="showRoomDetails(4)" />
+                            (click)="showRoomDetails(4,true)" />
                           <rect x="375.9" y="297.6" class="st2" width="90" height="90" [ngClass]="{
                                                                                                         'st-blue': rooms[1].roomStatus === 'booked' && rooms[1].roomFullyBooked === false,
                                                                                                         'st-red': rooms[1].roomStatus === 'booked' && rooms[1].roomFullyBooked === true,
                                                                                                         'st-green': rooms[1].roomStatus === 'not booked' && rooms[1].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(1)
                                                                                                         }"
-                            (click)="showRoomDetails(1)" />
+                            (click)="showRoomDetails(1,true)" />
                           <rect x="286" y="207.6" class="st2" width="90" height="90" [ngClass]="{
                                                                                                         'st-blue': rooms[5].roomStatus === 'booked' && rooms[5].roomFullyBooked === false,
                                                                                                         'st-red': rooms[5].roomStatus === 'booked' && rooms[5].roomFullyBooked === true,
@@ -3554,33 +3558,33 @@
                                                                                                         'st-green': rooms[6].roomStatus === 'not booked' && rooms[6].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(6)
                                                                                                         }"
-                            (click)="showRoomDetails(6)" />
+                            (click)="showRoomDetails(6,true)" />
                           <rect x="245.6" y="77.3" class="st2" width="90" height="90" [ngClass]="{
                                                                                                         'st-blue': rooms[7].roomStatus === 'booked' && rooms[7].roomFullyBooked === false,
                                                                                                         'st-red': rooms[7].roomStatus === 'booked' && rooms[7].roomFullyBooked === true,
                                                                                                         'st-green': rooms[7].roomStatus === 'not booked' && rooms[7].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(7)
                                                                                                         }"
-                            (click)="showRoomDetails(7)" />
+                            (click)="showRoomDetails(7,true)" />
                           <rect x="155.6" y="427.7" class="st2" width="90" height="90" [ngClass]="{
                                                                                                         'st-blue': rooms[8].roomStatus === 'booked' && rooms[8].roomFullyBooked === false,
                                                                                                         'st-red': rooms[8].roomStatus === 'booked' && rooms[8].roomFullyBooked === true,
                                                                                                         'st-green': rooms[8].roomStatus === 'not booked' && rooms[8].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(8)
                                                                                                         }"
-                            (click)="showRoomDetails(8)" />
+                            (click)="showRoomDetails(8,true)" />
                           <rect x="245.6" y="427.7" class="st2" width="90" height="90" [ngClass]="{
                                                                                                         'st-blue': rooms[9].roomStatus === 'booked' && rooms[9].roomFullyBooked === false,
                                                                                                         'st-red': rooms[9].roomStatus === 'booked' && rooms[9].roomFullyBooked === true,
                                                                                                         'st-green': rooms[9].roomStatus === 'not booked' && rooms[9].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(9)
                                                                                                         }"
-                            (click)="showRoomDetails(9)" />
+                            (click)="showRoomDetails(9,true)" />
                           <rect x="465.9" y="297.6" class="st2" width="90" height="90" [ngClass]="{'st-blue': rooms[0].roomStatus === 'booked' && rooms[0].roomFullyBooked === false,
                                                                                                         'st-red': rooms[0].roomStatus === 'booked' && rooms[0].roomFullyBooked === true,
                                                                                                         'st-green': rooms[0].roomStatus === 'not booked' && rooms[0].roomFullyBooked === false,
                                                                                                         'st-selected': isActive(0)}"
-                            (click)="showRoomDetails(0)" />
+                            (click)="showRoomDetails(0,true)" />
                           <g>
                             <path d="M213.5,333.4h1.5l7.7,18.5h-1.9l-2.4-5.8h-8.3l-2.4,5.8h-2L213.5,333.4z M217.9,344.7l-3.7-9.1l-3.8,9.1H217.9z" />
                             <path d="M241.7,351.9v-15.2l-6.7,11.7h-1.1l-6.7-11.7v15.2h-1.8v-18.5h1.9l7.2,12.6l7.3-12.6h1.8v18.5H241.7z" />

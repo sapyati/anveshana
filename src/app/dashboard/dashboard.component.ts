@@ -92,6 +92,17 @@ export class DashboardComponent implements OnInit {
     return bookedRoomName[0].roomName;
   }
 
+  editConference(booking){
+    this.bookConference();        
+    this.dateTimeForm.get('bookingDateTo').setValue(booking.bookedDateTo);
+    this.dateTimeForm.get('bookingDateFrom').setValue(booking.bookedDateFrom);
+    this.dateTimeForm.controls['bookingDateTo'].markAsTouched();
+    this.dateTimeForm.controls['bookingDateFrom'].markAsTouched();
+    this.selectDateTime(booking.bookedDateFrom,booking.bookedDateTo,false);
+    this.showMap = true;
+    
+  }
+
   deleteItem(id, conferenceId) {
 
     this.showMap = false;
@@ -132,15 +143,16 @@ export class DashboardComponent implements OnInit {
   }
 
   // get bookings data for selected date range
-  getAllRoomBookings(fromDate, toDate) {
+   getAllRoomBookings(fromDate, toDate, flag) {
+    
     this.roomListService.getAllRoomBookings()
       .subscribe(
         (data) => {
+          let conferenceId = null;
           this.allRoomBookings = data;
           if (this.allRoomBookings.length) {
             let isRoomBooked = false;
-            for (const booking of this.allRoomBookings) {
-
+            for (const booking of this.allRoomBookings) {                
               const bookedFromDate = booking.bookedDateFrom;
               const bookedToDate = booking.bookedDateTo;
 
@@ -181,13 +193,16 @@ export class DashboardComponent implements OnInit {
                   }
                 }
               }
-
+              this.showRoomDetails(booking.conferenceId - 1,true);      
             }
           } else {
             for (const room of this.rooms) {
               room.roomStatus = 'not booked';
             }
           }
+          
+          this.showMap = true;
+          
         },
         (err) => {
           console.error(err);
@@ -233,11 +248,22 @@ export class DashboardComponent implements OnInit {
   }
 
   // show selected room details
-  showRoomDetails(roomNo) {
+  showRoomDetails(roomNo,flag) {
     this.selectedRoom = this.rooms[parseInt(roomNo, 10)];
-    // get bookings details on select
-    const fromDate = this.dateTimeForm.value.bookingDateFrom.toLocaleDateString('en-GB');
-    const toDate = this.dateTimeForm.value.bookingDateTo.toLocaleDateString('en-GB');
+      // get bookings details on select
+    let fromDate = null;
+    let toDate = null;
+     
+    let fDate = this.dateTimeForm.value.bookingDateFrom;
+    let TDate = this.dateTimeForm.value.bookingDateTo;
+    if(fDate instanceof Date && TDate instanceof Date){
+     fromDate = this.dateTimeForm.value.bookingDateFrom.toLocaleDateString('en-GB');
+     toDate = this.dateTimeForm.value.bookingDateTo.toLocaleDateString('en-GB');
+    }
+    else{
+      fromDate = this.dateTimeForm.value.bookingDateFrom;
+      toDate =  this.dateTimeForm.value.bookingDateTo;
+    }
     this.getBookings(this.selectedRoom, fromDate, toDate);
     // notify booking form component of the selected room
     this.notifyChildren(this.selectedRoom);
@@ -273,22 +299,31 @@ export class DashboardComponent implements OnInit {
   }
 
   fromDateChanged(fromDate) {
-    this.toMinDate.setDate(fromDate.getDate());
-    this.toMaxDate.setDate(fromDate.getDate() + 14);
-    this.dateTimeForm.get('bookingDateTo').setValue(fromDate);
-    this.showMap = false;
+    // this.toMinDate.setDate(fromDate.getDate());
+    // this.toMaxDate.setDate(fromDate.getDate() + 14);
+    // //this.dateTimeForm.get('bookingDateTo').setValue(fromDate);
+    // this.showMap = false;
   }
 
   toDateChanged(toDate) {
     this.showMap = false;
   }
 
-  selectDateTime(dateTimeForm) {
-    this.selectedRoom = null;
-    const fromDate = dateTimeForm.bookingDateFrom.toLocaleDateString('en-GB');
-    const toDate = dateTimeForm.bookingDateTo.toLocaleDateString('en-GB');
-    this.getAllRoomBookings(fromDate, toDate);
-    this.showMap = true;
+  selectDateTime(fromDateApi,toDateApi,flag) {
+    this.selectedRoom = null;   
+    let fromDate = null;
+    let toDate = null;
+  
+    if((fromDateApi instanceof Date) && (toDateApi instanceof Date)){ 
+     fromDate = fromDateApi.toLocaleDateString('en-GB');
+     toDate = toDateApi.toLocaleDateString('en-GB');
+    }
+    else{
+      fromDate = fromDateApi;
+      toDate = toDateApi;
+    }
+    let response = this.getAllRoomBookings(fromDate, toDate, flag); 
+
   }
 
   editDate(booking) {
