@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { RoomsListService } from '../rooms-list.service';
 import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -34,6 +34,10 @@ export class DashboardComponent implements OnInit {
   dateTimeForm: FormGroup;
   user: string;
   showMap: boolean;
+
+  editTimeFrom: any;
+  editTimeTo: any;
+  eventName: any;
 
   // Viewpreviousbook = false;
   // bookNow = true;
@@ -287,6 +291,29 @@ export class DashboardComponent implements OnInit {
     this.showMap = true;
   }
 
+  editDate(booking) {
+    this.bookConference();
+    this.selectedRoom = null;
+    this.getAllRoomBookings(booking.bookedDateFrom, booking.bookedDateTo);
+    const splitBfd = booking.bookedDateFrom.split('/');
+    const bookedFromDate = new Date();
+    bookedFromDate.setDate(splitBfd[0]);
+    bookedFromDate.setMonth( splitBfd[1] - 1 );
+    bookedFromDate.setFullYear(splitBfd[2]);
+    const splitTfd = booking.bookedDateTo.split('/');
+    const bookedToDate = new Date();
+    bookedToDate.setDate(splitTfd[0]);
+    bookedToDate.setMonth( splitTfd[1] - 1 );
+    bookedToDate.setFullYear(splitTfd[2]);
+    this.dateTimeForm.get('bookingDateFrom').setValue(bookedFromDate);
+    this.dateTimeForm.get('bookingDateTo').setValue(bookedToDate);
+    this.editTimeFrom = booking.bookedTimeFrom;
+    this.editTimeTo = booking.bookedTimeTo;
+    this.eventName = booking.meetingName;
+    this.showMap = true;
+    this.showRoomDetails(booking.conferenceId - 1);
+  }
+
   // bookConference() {
   //   this.Viewpreviousbook = false;
   //   this.multipletab = false;
@@ -305,6 +332,7 @@ export class DashboardComponent implements OnInit {
     this.myBookingsTab = false;
     this.myBookings = false;
     this.bookNow = true;
+    this.app.detectChanges();
   }
   viewPreviousbookings() {
     this.bookNowTab = false;

@@ -48,7 +48,7 @@
                     <td>{{booking.bookedDateTo}}</td>
                     <td>{{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}</td>
                     <td>
-                      <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
+                      <a href="javascript:;" class="btn btn-primary btn-xs" (click)="editDate(booking)"><i class="fa fa-edit"></i> Edit</a>
                       <a href="javascript:;" class="btn btn-danger btn-xs pull-right" (click)="deleteItem(booking.id, booking.conferenceId)"><i
                           class="fa fa-trash"></i> Delete</a>
                     </td>
@@ -3804,7 +3804,7 @@
                   </div>
                   <div class="c-box__content">
                     <app-booking-form [dateWiseBookings]="dateWiseBookings" [dateTimeForm]="dateTimeForm" [jsonData]="rooms" [selectedRoom]="selectedRoom"
-                      [parentSubject]="parentSubject" (roomBooked)='changeRoomStatus($event)'>
+                      [parentSubject]="parentSubject" (roomBooked)='changeRoomStatus($event)' [editTimeFrom]="editTimeFrom" [editTimeTo]="editTimeTo" [eventName]="eventName">
                     </app-booking-form>
                   </div>
                 </div>

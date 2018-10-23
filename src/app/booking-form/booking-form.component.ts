@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { RoomsListService } from '../rooms-list.service';
@@ -9,12 +9,15 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './booking-form.component.html',
   styleUrls: ['./booking-form.component.scss']
 })
-export class BookingFormComponent implements OnInit, OnDestroy {
+export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() jsonData: any;
   @Input() dateWiseBookings: any;
   @Input() dateTimeForm: any;
   @Input() selectedRoom: any;
+  @Input() editTimeFrom: any;
+  @Input() editTimeTo: any;
+  @Input() eventName: any;
   @Input() parentSubject: Subject<any>;
   @Output() roomBooked = new EventEmitter();
 
@@ -89,7 +92,16 @@ export class BookingFormComponent implements OnInit, OnDestroy {
     });
 
     console.log(this.dateTimeForm);
+    
 
+  }
+
+  ngAfterViewInit() {
+    if (this.editTimeFrom && this.editTimeTo && this.eventName) {
+      this.rForm.get('bookedTimeFrom').setValue(this.editTimeFrom);
+      this.rForm.get('bookedTimeTo').setValue(this.editTimeTo);
+      this.rForm.get('meetingName').setValue(this.eventName);
+    }
   }
 
   ngOnDestroy() {
@@ -100,6 +112,88 @@ export class BookingFormComponent implements OnInit, OnDestroy {
   // bookedTimeFrom
 
   fromTimeChanged(fromTime, toTime) {
+
+    const fromTimeDay = new Date(fromTime);
+    const fromTimeHour = fromTimeDay.getHours();
+    const fromTimeMinutes = fromTimeDay.getMinutes();
+
+    const toTimeDay = new Date(toTime);
+    const toTimeHour = toTimeDay.getHours();
+    const toTimeMinutes = toTimeDay.getMinutes();
+
+    const fromTimeAmPm = (fromTimeHour >= 12) ? 'PM' : 'AM';
+    const toTimeAmPm = (toTimeHour >= 12) ? 'PM' : 'AM';
+
+    const formattedFromTime = `${fromTimeHour}${fromTimeMinutes}`;
+    const formattedToTime = `${toTimeHour}${toTimeMinutes}`;
+
+    if (formattedFromTime === formattedToTime) {
+      alert('from time cannot be equal to time');
+    }
+
+    if (fromTimeHour === toTimeHour && fromTimeMinutes > toTimeMinutes) {
+      alert('from time cannot be more than to time');
+    }
+
+    let isRoomBooked = false;
+
+    for (const booking of this.dateWiseBookings) {
+
+      const bookingFromTimeDay = new Date(booking.bookedTimeFrom);
+      const bookingFromTimeHour = bookingFromTimeDay.getHours();
+      const bookingFromTimeMinutes = bookingFromTimeDay.getMinutes();
+
+      const bookingToTimeDay = new Date(booking.bookedTimeTo);
+      const bookingToTimeHour = bookingToTimeDay.getHours();
+      const bookingToTimeMinutes = bookingToTimeDay.getMinutes();
+
+      const formattedBookingFromTime = `${bookingFromTimeHour}${bookingFromTimeMinutes}`;
+      const formattedBookingToTime = `${bookingToTimeHour}${bookingToTimeMinutes}`;
+
+      // const FromTimeAmPm = (bookingFromTimeHour >= 12) ? 'PM' : 'AM';
+      // const toTimeAmPm = (bookingToTimeHour >= 12) ? 'PM' : 'AM';
+
+      if (formattedFromTime === formattedBookingFromTime || formattedToTime === formattedBookingToTime) {
+        if (isRoomBooked === false) {
+          alert('from time or to time cannot be equal to booked from time or to time');
+          isRoomBooked = true;
+        }
+      }
+
+      if (fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour) {
+        if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
+          if (isRoomBooked === false) {
+            alert('from time falls between booked time range');
+            isRoomBooked = true;
+          }
+        }
+      }
+
+      if (fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour) {
+        if (toTimeMinutes > bookingFromTimeMinutes && toTimeMinutes < bookingToTimeMinutes) {
+          if (isRoomBooked === false) {
+            alert('to time falls between booked time range');
+            isRoomBooked = true;
+          }
+        }
+      }
+
+      if (fromTimeHour < bookingFromTimeHour && toTimeHour > bookingToTimeHour && toTimeHour > bookingFromTimeHour) {
+        if (isRoomBooked === false) {
+          alert('to time falls between booked time range');
+          isRoomBooked = true;
+        }
+      }
+
+      if (fromTimeHour === bookingFromTimeHour && toTimeHour > bookingToTimeHour) {
+        if (isRoomBooked === false) {
+          alert('from time falls between booked time range');
+          isRoomBooked = true;
+        }
+      }
+
+    }
+
   }
 
   toTimeChanged(toTime) {
