@@ -3,7 +3,7 @@
     {
       "id": 1,
       "roomName": "Memphis",
-      "roomStatus": "booked",
+      "roomStatus": "not booked",
       "roomFullyBooked": false,
       "roomCapacity": "4pc",
       "roomFacilities": [
@@ -138,11 +138,11 @@
   ],
   "roomBookings": [
     {
-      "conferenceId": 1,
+      "conferenceId": 3,
       "bookedBy": "admin",
       "meetingName": "test",
-      "bookedDateFrom": "21/10/2018",
-      "bookedDateTo": "21/10/2018",
+      "bookedDateFrom": "24/10/2018",
+      "bookedDateTo": "25/10/2018",
       "bookedTimeFrom": "2018-10-21T12:10:56.762Z",
       "bookedTimeTo": "2018-10-21T12:15:56.762Z",
       "id": 1
@@ -151,10 +151,10 @@
       "conferenceId": 3,
       "bookedBy": "admin",
       "meetingName": "test",
-      "bookedDateFrom": "21/10/2018",
-      "bookedDateTo": "21/10/2018",
-      "bookedTimeFrom": "2018-10-21T12:20:26.220Z",
-      "bookedTimeTo": "2018-10-21T12:25:26.220Z",
+      "bookedDateFrom": "23/10/2018",
+      "bookedDateTo": "23/10/2018",
+      "bookedTimeFrom": "2018-10-23T04:35:07.157Z",
+      "bookedTimeTo": "2018-10-23T04:40:07.157Z",
       "id": 2
     }
   ]
