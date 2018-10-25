@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@an
 import { RoomsListService } from '../rooms-list.service';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import { trigger, state, transition, style, animate } from '@angular/animations';
+import { trigger, state, transition, style, animate, stagger, query } from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,7 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
     trigger('fade', [
       state('void', style({ opacity: 0 })),
       transition(':enter, :leave', [
-        animate(300)
+        animate('600ms ease-out')
       ])
     ])
   ]
@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit {
   dateTimeForm: FormGroup;
   user: string;
   showMap: boolean;
+  isAccordianOpen = true;
 
   editTimeFrom: any;
   editTimeTo: any;
@@ -255,7 +256,7 @@ export class DashboardComponent implements OnInit {
 
   // update room data on booking
   changeRoomStatus(roomId) {
-
+    this.isAccordianOpen = true;
     this.dateTimeForm.reset();
     this.dateTimeForm.get('bookingDateFrom').setValue(this.fromMinDate);
     this.dateTimeForm.get('bookingDateTo').setValue(this.toMinDate);
@@ -284,6 +285,7 @@ export class DashboardComponent implements OnInit {
   }
 
   selectDateTime(dateTimeForm) {
+    this.isAccordianOpen = false;
     this.selectedRoom = null;
     const fromDate = dateTimeForm.bookingDateFrom.toLocaleDateString('en-GB');
     const toDate = dateTimeForm.bookingDateTo.toLocaleDateString('en-GB');

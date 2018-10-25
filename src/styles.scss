@@ -69,3 +69,34 @@ timepicker table {
     -webkit-box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -7px rgba(0,0,0,0.2);
     box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -7px rgba(0,0,0,0.2);
 }
+
+.panel {
+  border: none;
+  box-shadow: none;
+}
+
+.panel-heading {
+  padding: 5px 0px;
+}
+
+.panel .btn-link {
+  outline: none;
+  color: #94C85C;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.panel .btn-link:hover, .panel .btn-link:focus, .panel .btn-link:active, .panel .btn-link:link {
+  outline: none;
+  color: #94C85C;
+  text-decoration: none;
+}
+
+.panel-body {
+  padding: 0px;
+  border-top: 0px;
+}
+
+.table {
+  margin-bottom: 0px;
+}

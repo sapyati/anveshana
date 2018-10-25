@@ -52,11 +52,6 @@
   }
 }
 
-.btn-sabha-login[disabled]:hover, .btn-sabha-login[disabled] {
-  background-color: #ad7a37;
-  cursor: not-allowed;
-}
-
 .btn-sabha-login{
   font-size: 1.8em;
   width: 60px;
@@ -76,6 +71,11 @@
   background-color: #689411;
   transition: all 100ms ease;
   cursor: pointer;
+}
+
+.btn-sabha-login[disabled]:hover, .btn-sabha-login[disabled] {
+  background-color: #ad7a37;
+  cursor: not-allowed;
 }
 
 .c-footer {
