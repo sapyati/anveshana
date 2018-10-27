@@ -21,6 +21,7 @@
 
     <accordion class="z-depth-2" *ngIf="previousBookings.length">
       <accordion-group heading="My Bookings" [isOpen]="isAccordianOpen" @fade>
+        <form [formGroup]="editBookingForm" (ngSubmit)="checkAvailability(editBookingForm)">
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
             <thead>
@@ -37,11 +38,50 @@
             <tbody @fade>
               <tr *ngFor="let booking of previousBookings; let i = index">
                 <td>{{ i+1 }}</td>
-                <td>{{ getRoomNameById(booking.conferenceId) }}</td>
-                <td>{{ booking.meetingName }}</td>
-                <td>{{booking.bookedDateFrom}}</td>
-                <td>{{booking.bookedDateTo}}</td>
-                <td>{{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}</td>
+                <td>
+                  <div *ngIf="!isEditing">
+                    {{ getRoomNameById(booking.conferenceId) }}
+                  </div>
+                  <div *ngIf="isEditing">
+                    <select name="" id="" class="form-control" formControlName="editRoomName">
+                      <option *ngFor="let room of rooms" [value]="room.id" >{{room.roomName}}</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing">
+                      {{ booking.meetingName }}
+                  </div>
+                  <div *ngIf="isEditing">
+                      <input type="text" class="form-control" value="" formControlName="editMeetingName" />
+                  </div>
+                </td>
+                <td>
+                    <div *ngIf="!isEditing">
+                        {{booking.bookedDateFrom}}
+                    </div>
+                    <div *ngIf="isEditing">
+                        <input class="form-control" placeholder="From Date" 
+                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="fromMinDate"
+                [maxDate]="fromMaxDate" (bsValueChange)="fromDateChanged($event)" formControlName="editFromDate">
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="!isEditing">
+                        {{booking.bookedDateTo}}
+                    </div>
+                    <div *ngIf="isEditing">
+                        <input class="form-control" placeholder="To Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="toMinDate"
+                [maxDate]="toMaxDate" (bsValueChange)="toDateChanged($event)" formControlName="editToDate">
+
+                <button class="btn btn-success" id="chkAvailable">Check Availability</button>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="!isEditing">
+                        {{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}
+                    </div>                    
+                </td>
                 <td>
                   <a href="javascript:;" class="btn btn-primary btn-xs" (click)="editDate(booking)"><i class="fa fa-edit"></i>
                     Edit</a>
@@ -55,6 +95,8 @@
             </tbody>
           </table>
         </div>
+        {{dateWiseBookings | json}}
+      </form>
       </accordion-group>
     </accordion>
 

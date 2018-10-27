@@ -36,10 +36,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   showMap: boolean;
   isAccordianOpen = true;
   locationSubscription;
-
+  isEditing = false;
   editTimeFrom: any;
   editTimeTo: any;
   eventName: any;
+  editBookingForm: any;
+  editBookingItem: any;
 
   myBookings = false;
   bookNow = true;
@@ -83,6 +85,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )]
     });
 
+    this.editBookingForm = fb.group({
+      'editRoomName': [null, Validators.compose(
+        [Validators.required]
+      )],
+      'editMeetingName': [null, Validators.compose(
+        [Validators.required]
+      )],
+      'editFromDate': [null, Validators.compose(
+        [Validators.required]
+      )],
+      'editToDate': [null, Validators.compose(
+        [Validators.required]
+      )]
+    });
+
   }
 
   ngOnInit() {
@@ -105,6 +122,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const bookedRoomName = this.rooms.filter(room => room.id === roomId);
     return bookedRoomName[0].roomName;
   }
+
+
 
   deleteItem(id, conferenceId) {
 
@@ -306,27 +325,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.showMap = true;
   }
 
-  editDate(booking) {
-    this.bookConference();
-    this.selectedRoom = null;
-    this.getAllRoomBookings(booking.bookedDateFrom, booking.bookedDateTo);
-    const splitBfd = booking.bookedDateFrom.split('/');
-    const bookedFromDate = new Date();
-    bookedFromDate.setDate(splitBfd[0]);
-    bookedFromDate.setMonth(splitBfd[1] - 1);
-    bookedFromDate.setFullYear(splitBfd[2]);
-    const splitTfd = booking.bookedDateTo.split('/');
-    const bookedToDate = new Date();
-    bookedToDate.setDate(splitTfd[0]);
-    bookedToDate.setMonth(splitTfd[1] - 1);
-    bookedToDate.setFullYear(splitTfd[2]);
-    this.dateTimeForm.get('bookingDateFrom').setValue(bookedFromDate);
-    this.dateTimeForm.get('bookingDateTo').setValue(bookedToDate);
-    this.editTimeFrom = booking.bookedTimeFrom;
-    this.editTimeTo = booking.bookedTimeTo;
-    this.eventName = booking.meetingName;
-    this.showMap = true;
-    this.showRoomDetails(booking.conferenceId - 1);
+  editDate(booking, editForm) {
+    this.editBookingItem = booking;
+    // this.bookConference();
+    // this.selectedRoom = null;
+    // this.getAllRoomBookings(booking.bookedDateFrom, booking.bookedDateTo);
+    // const splitBfd = booking.bookedDateFrom.split('/');
+    // const bookedFromDate = new Date();
+    // bookedFromDate.setDate(splitBfd[0]);
+    // bookedFromDate.setMonth(splitBfd[1] - 1);
+    // bookedFromDate.setFullYear(splitBfd[2]);
+    // const splitTfd = booking.bookedDateTo.split('/');
+    // const bookedToDate = new Date();
+    // bookedToDate.setDate(splitTfd[0]);
+    // bookedToDate.setMonth(splitTfd[1] - 1);
+    // bookedToDate.setFullYear(splitTfd[2]);
+    // this.dateTimeForm.get('bookingDateFrom').setValue(bookedFromDate);
+    // this.dateTimeForm.get('bookingDateTo').setValue(bookedToDate);
+    // this.editTimeFrom = booking.bookedTimeFrom;
+    // this.editTimeTo = booking.bookedTimeTo;
+    // this.eventName = booking.meetingName;
+    // this.showMap = true;
+    // this.showRoomDetails(booking.conferenceId - 1);
+
+    this.isEditing = true;
+    alert(booking.conferenceId);
+    this.editBookingForm.get('editRoomName').setValue(booking.conferenceId);
+    this.editBookingForm.get('editMeetingName').setValue(booking.meetingName);
+    this.editBookingForm.get('editFromDate').setValue(booking.bookedDateFrom);
+    this.editBookingForm.get('editToDate').setValue(booking.bookedDateTo);
+  }
+
+  checkAvailability(editBookingForm){    
+    this.selectedRoom = this.rooms[parseInt(this.editBookingItem.conferenceId) -1];
+    let editfromDate = editBookingForm.controls.editFromDate.value.toLocaleDateString('en-GB');
+    let edittoDate = editBookingForm.controls.editToDate.value.toLocaleDateString('en-GB');
+    this.getBookings(this.selectedRoom,editfromDate,edittoDate);
   }
 
   // bookConference() {
