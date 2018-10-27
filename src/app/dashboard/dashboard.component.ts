@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { RoomsListService } from '../rooms-list.service';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
@@ -17,7 +17,7 @@ import { trigger, state, transition, style, animate, stagger, query } from '@ang
     ])
   ]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   rooms: any[];
   selectedRoom: any;
   roomBookedStatus: any;
@@ -35,10 +35,16 @@ export class DashboardComponent implements OnInit {
   user: string;
   showMap: boolean;
   isAccordianOpen = true;
+  locationSubscription;
 
   editTimeFrom: any;
   editTimeTo: any;
   eventName: any;
+
+  myBookings = false;
+  bookNow = true;
+  myBookingsTab = false;
+  bookNowTab = true;
 
   // Viewpreviousbook = false;
   // bookNow = true;
@@ -46,10 +52,14 @@ export class DashboardComponent implements OnInit {
   // singletab = true;
   // multipletab = false;
 
-  myBookings = false;
-  bookNow = true;
-  myBookingsTab = false;
-  bookNowTab = true;
+  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+    console.log('Processing beforeunload...');
+    event.returnValue = false;
+  }
+
+  canDeactivate() {
+    return confirm('Do you really want to leave?');
+  }
 
   constructor(
     private roomListService: RoomsListService,
@@ -79,6 +89,9 @@ export class DashboardComponent implements OnInit {
     this.getRooms();
     this.getPreviousBookings(localStorage.getItem('loggedInUser'));
     this.user = localStorage.getItem('loggedInUser');
+  }
+
+  ngOnDestroy() {
   }
 
   // get rooms data

@@ -19,8 +19,8 @@
 <div class="content" style="margin-top: 50px; padding-bottom: 50px;">
   <div class="container-fluid">
 
-    <accordion class="z-depth-2">
-      <accordion-group heading="My Bookings" [isOpen]="isAccordianOpen">
+    <accordion class="z-depth-2" *ngIf="previousBookings.length">
+      <accordion-group heading="My Bookings" [isOpen]="isAccordianOpen" @fade>
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
             <thead>

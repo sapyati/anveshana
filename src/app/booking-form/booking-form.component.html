@@ -4,21 +4,27 @@
   <p><strong>Selected Date</strong> : {{dateTimeForm.value.bookingDateFrom | date:'dd/MM/yyyy' }} <strong>to</strong> {{dateTimeForm.value.bookingDateTo | date:'dd/MM/yyyy' }}</p>
   
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <!-- from time -->
       <div class="form-group" [ngClass]="{'has-error': !rForm.controls['bookedTimeFrom'].valid && rForm.controls['bookedTimeFrom'].touched}">
         <label for="meetingName">Select From Time</label>
-        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeFrom" (ngModelChange)="fromTimeChanged($event, rForm.controls['bookedTimeTo'].value)"></timepicker>        
+        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeFrom" (ngModelChange)="timeChanged($event, rForm.controls['bookedTimeTo'].value)"></timepicker>        
+        <span class="help-block" *ngIf="fromTimeError">
+          {{fromTimeError}}
+        </span>
       </div>
     </div>    
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <!-- to time -->
       <div class="form-group" [ngClass]="{'has-error': !rForm.controls['bookedTimeTo'].valid && rForm.controls['bookedTimeTo'].touched}">
         <label for="meetingName">Select To Time</label>
-        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="toTimeChanged($event)"></timepicker>
+        <timepicker [showMeridian]="ismeridian" formControlName="bookedTimeTo" (ngModelChange)="timeChanged(rForm.controls['bookedTimeFrom'].value, $event)"></timepicker>
+        <span class="help-block" *ngIf="toTimeError">
+          {{toTimeError}}
+        </span>
       </div>
     </div>
   </div>
@@ -37,5 +43,5 @@
     </span>
   </div>  
 
-  <button type="submit" class="btn btn-primary" [disabled]="!rForm.valid">Submit</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!rForm.valid || fromTimeError || toTimeError">Submit</button>
 </form>

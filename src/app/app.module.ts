@@ -14,6 +14,7 @@ import { BookingFormComponent } from './booking-form/booking-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BsDatepickerModule, TimepickerModule, AccordionModule } from 'ngx-bootstrap';
+import { DashBoardDeactivateGuard } from './dashboard/dashboard.deactivate-guard';
 
 const appRoutes: Routes = [
   {
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canDeactivate: [DashBoardDeactivateGuard]
   }
 ];
 
@@ -55,7 +57,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     BsDatepickerModule
   ],
-  providers: [RoomsListService],
+  providers: [RoomsListService, DashBoardDeactivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

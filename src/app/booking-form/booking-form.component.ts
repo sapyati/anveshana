@@ -26,6 +26,8 @@ export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
   minTime: Date = new Date();
   bookingFromTime: Date = new Date();
   bookingToTime: Date = new Date();
+  fromTimeError: string;
+  toTimeError: string;
 
   constructor(private fb: FormBuilder, private roomListService: RoomsListService, private toastr: ToastrService) {
 
@@ -77,22 +79,20 @@ export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showSuccess(postData) {
+    const bFromTime = postData.bookedTimeFrom.toLocaleTimeString('en-US').replace(/:\d+ /, ' ');
+    const bToTime = postData.bookedTimeTo.toLocaleTimeString('en-US').replace(/:\d+ /, ' ');
     this.toastr.success(
       `Room ${this.selectedRoom.roomName} is booked on date
-      ${postData.bookedDateFrom} to ${postData.bookedDateTo} from ${postData.bookedTimeFrom} to
-      ${postData.bookedTimeTo}`, 'Booking Successful!',
-      { positionClass: 'toast-top-center', closeButton: true }
+      ${postData.bookedDateFrom} to ${postData.bookedDateTo} from ${bFromTime} to
+      ${bToTime}`, 'Booking Successful!',
+      { positionClass: 'toast-top-full-width', closeButton: true, timeOut: 5000 }
     );
   }
 
   ngOnInit() {
     // set booking form Room Name value to selected room change
     this.parentSubject.subscribe(event => {
-      console.log();
     });
-
-    console.log(this.dateTimeForm);
-    
 
   }
 
@@ -111,7 +111,9 @@ export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // bookedTimeFrom
 
-  fromTimeChanged(fromTime, toTime) {
+  timeChanged(fromTime, toTime){
+    this.fromTimeError = '';
+    this.toTimeError = '';
 
     const fromTimeDay = new Date(fromTime);
     const fromTimeHour = fromTimeDay.getHours();
@@ -121,24 +123,15 @@ export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
     const toTimeHour = toTimeDay.getHours();
     const toTimeMinutes = toTimeDay.getMinutes();
 
-    const fromTimeAmPm = (fromTimeHour >= 12) ? 'PM' : 'AM';
-    const toTimeAmPm = (toTimeHour >= 12) ? 'PM' : 'AM';
-
-    const formattedFromTime = `${fromTimeHour}${fromTimeMinutes}`;
-    const formattedToTime = `${toTimeHour}${toTimeMinutes}`;
-
-    if (formattedFromTime === formattedToTime) {
-      alert('from time cannot be equal to time');
-    }
-
-    if (fromTimeHour === toTimeHour && fromTimeMinutes > toTimeMinutes) {
-      alert('from time cannot be more than to time');
+    if (fromTimeHour > toTimeHour){
+      this.fromTimeError = 'From time can not be more than or equal To Time';
+    } else if (fromTimeHour === toTimeHour && fromTimeMinutes >= toTimeMinutes) {
+      this.fromTimeError = 'From time can not be more than or equal To Time';
     }
 
     let isRoomBooked = false;
 
     for (const booking of this.dateWiseBookings) {
-
       const bookingFromTimeDay = new Date(booking.bookedTimeFrom);
       const bookingFromTimeHour = bookingFromTimeDay.getHours();
       const bookingFromTimeMinutes = bookingFromTimeDay.getMinutes();
@@ -147,58 +140,123 @@ export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
       const bookingToTimeHour = bookingToTimeDay.getHours();
       const bookingToTimeMinutes = bookingToTimeDay.getMinutes();
 
-      const formattedBookingFromTime = `${bookingFromTimeHour}${bookingFromTimeMinutes}`;
-      const formattedBookingToTime = `${bookingToTimeHour}${bookingToTimeMinutes}`;
-
-      // const FromTimeAmPm = (bookingFromTimeHour >= 12) ? 'PM' : 'AM';
-      // const toTimeAmPm = (bookingToTimeHour >= 12) ? 'PM' : 'AM';
-
-      if (formattedFromTime === formattedBookingFromTime || formattedToTime === formattedBookingToTime) {
+      if (fromTimeHour === bookingFromTimeHour && fromTimeMinutes === bookingFromTimeMinutes) {
+        if (isRoomBooked === false){
+          this.fromTimeError = 'From time can not be same as booked from time';
+          isRoomBooked = true;
+        }
+      } else if (toTimeHour === bookingToTimeHour && toTimeMinutes === bookingToTimeMinutes) {
         if (isRoomBooked === false) {
-          alert('from time or to time cannot be equal to booked from time or to time');
+          this.toTimeError = 'To time can not be same as booked to time';
           isRoomBooked = true;
         }
       }
 
-      if (fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour) {
+      if (fromTimeHour < (bookingFromTimeHour && bookingToTimeHour) &&
+        toTimeHour > (bookingFromTimeHour && bookingToTimeHour)
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if ( fromTimeHour < (bookingFromTimeHour && bookingToTimeHour) &&
+        (
+          (toTimeHour === bookingFromTimeHour) &&
+          (toTimeHour === bookingToTimeHour && toTimeMinutes >= bookingToTimeMinutes)
+        )
+        ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (fromTimeHour < (bookingFromTimeHour && bookingToTimeHour) &&
+        (
+          (toTimeHour === bookingFromTimeHour && toTimeMinutes > bookingFromTimeMinutes) &&
+          (toTimeHour === bookingToTimeHour && toTimeMinutes < bookingToTimeMinutes)
+        )
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (
+         fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour &&
+        (fromTimeMinutes < bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes && toTimeMinutes > bookingFromTimeMinutes
+          && toTimeMinutes < bookingToTimeMinutes) 
+        ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour &&
+        (fromTimeMinutes < bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes && toTimeMinutes > bookingFromTimeMinutes
+          && toTimeMinutes > bookingToTimeMinutes)
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour
+      ) {
+        if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes){
+          if (toTimeMinutes > bookingFromTimeMinutes && toTimeMinutes < bookingToTimeMinutes) {
+            if (isRoomBooked === false) {
+              this.fromTimeError = 'Selected date includes already booked date range';
+              isRoomBooked = true;
+            }
+          }
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour
+      ) {
+        if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
+          if (toTimeMinutes > bookingFromTimeMinutes && toTimeMinutes > bookingToTimeMinutes) {
+            if (isRoomBooked === false) {
+              this.fromTimeError = 'Selected date includes already booked date range';
+              isRoomBooked = true;
+            }
+          }
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour > bookingToTimeHour
+      ) {
         if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
           if (isRoomBooked === false) {
-            alert('from time falls between booked time range');
+            this.fromTimeError = 'Selected date includes already booked date range';
             isRoomBooked = true;
           }
         }
       }
 
-      if (fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour) {
-        if (toTimeMinutes > bookingFromTimeMinutes && toTimeMinutes < bookingToTimeMinutes) {
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour > bookingToTimeHour
+      ) {
+        if (fromTimeMinutes < bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
           if (isRoomBooked === false) {
-            alert('to time falls between booked time range');
+            this.fromTimeError = 'Selected date includes already booked date range';
             isRoomBooked = true;
           }
-        }
-      }
-
-      if (fromTimeHour < bookingFromTimeHour && toTimeHour > bookingToTimeHour && toTimeHour > bookingFromTimeHour) {
-        if (isRoomBooked === false) {
-          alert('to time falls between booked time range');
-          isRoomBooked = true;
-        }
-      }
-
-      if (fromTimeHour === bookingFromTimeHour && toTimeHour > bookingToTimeHour) {
-        if (isRoomBooked === false) {
-          alert('from time falls between booked time range');
-          isRoomBooked = true;
         }
       }
 
     }
 
   }
-
-  toTimeChanged(toTime) {
-    // this.showMap = false;
-  }
-
 
 }
