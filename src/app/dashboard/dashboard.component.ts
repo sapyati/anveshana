@@ -3,6 +3,7 @@ import { RoomsListService } from '../rooms-list.service';
 import { Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { trigger, state, transition, style, animate, stagger, query } from '@angular/animations';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,17 +37,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   showMap: boolean;
   isAccordianOpen = true;
   locationSubscription;
-  isEditing = false;
+  selectedRowForEdit: any;
   editTimeFrom: any;
   editTimeTo: any;
   eventName: any;
   editBookingForm: any;
   editBookingItem: any;
-
+  fromTimeError: string;
+  toTimeError: string;
+  showAvailability: any;
   myBookings = false;
   bookNow = true;
   myBookingsTab = false;
   bookNowTab = true;
+  showAvailable: any;
+
+  isLoading = true;
 
   // Viewpreviousbook = false;
   // bookNow = true;
@@ -66,7 +72,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private roomListService: RoomsListService,
     public app: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.toMinDate = new Date();
     this.toMaxDate = new Date();
@@ -97,6 +104,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )],
       'editToDate': [null, Validators.compose(
         [Validators.required]
+      )],
+      'editFromTime': [null, Validators.compose(
+        [Validators.required]
+      )],
+      'editToTime': [null, Validators.compose(
+        [Validators.required]
       )]
     });
 
@@ -113,8 +126,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // get rooms data
   getRooms() {
+    this.isLoading = true;
     this.roomListService.getRooms()
-      .subscribe(data => this.rooms = data);
+      .subscribe(data => {
+        this.rooms = data;
+        this.isLoading = false;
+      });
   }
 
   // get room name by id
@@ -130,7 +147,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.showMap = false;
 
     this.roomListService.deleteBookings(id).subscribe((data) => {
-
+      this.showDeleteSuccess();
       this.roomListService.getPreviousBookings(localStorage.getItem('loggedInUser'))
         .subscribe((previousBookings) => {
           this.previousBookings = previousBookings;
@@ -157,18 +174,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // get bookings data for selected room
   getPreviousBookings(user) {
+    this.isLoading = true;
     this.roomListService.getPreviousBookings(user)
       .subscribe((data) => {
         this.previousBookings = data;
+        this.isLoading = false;
         console.log(this.previousBookings.length);
       });
   }
 
   // get bookings data for selected date range
   getAllRoomBookings(fromDate, toDate) {
+    this.isLoading = true;
     this.roomListService.getAllRoomBookings()
       .subscribe(
         (data) => {
+          this.isLoading = false;
           this.allRoomBookings = data;
           if (this.allRoomBookings.length) {
             let isRoomBooked = false;
@@ -230,8 +251,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // get bookings data for selected room
   getBookings(selectedRoom, fromDate, toDate) {
+    this.isLoading = true;
     this.roomListService.getBookings(selectedRoom)
       .subscribe((data) => {
+        this.isLoading = false;
         this.bookings = data;
         this.dateWiseBookings = [];
         if (this.bookings.length) {
@@ -288,6 +311,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // update room data on booking
   changeRoomStatus(roomId) {
+    this.isLoading = true;
     this.isAccordianOpen = true;
     this.dateTimeForm.reset();
     this.dateTimeForm.get('bookingDateFrom').setValue(this.fromMinDate);
@@ -298,6 +322,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
     this.roomListService.updateRoomStatus(roomId, roomStatus).subscribe(
       data => {
+        this.isLoading = false;
         this.selectedRoom = null;
       }
     );
@@ -318,49 +343,93 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   selectDateTime(dateTimeForm) {
     this.isAccordianOpen = false;
+    this.selectedRowForEdit = '';
     this.selectedRoom = null;
     const fromDate = dateTimeForm.bookingDateFrom.toLocaleDateString('en-GB');
     const toDate = dateTimeForm.bookingDateTo.toLocaleDateString('en-GB');
     this.getAllRoomBookings(fromDate, toDate);
     this.showMap = true;
+    this.editBookingForm.markAsPristine();
   }
 
   editDate(booking, editForm) {
+    this.showAvailability = '';
+    this.dateWiseBookings = [];
+    this.selectedRowForEdit = '';
     this.editBookingItem = booking;
-    // this.bookConference();
-    // this.selectedRoom = null;
-    // this.getAllRoomBookings(booking.bookedDateFrom, booking.bookedDateTo);
-    // const splitBfd = booking.bookedDateFrom.split('/');
-    // const bookedFromDate = new Date();
-    // bookedFromDate.setDate(splitBfd[0]);
-    // bookedFromDate.setMonth(splitBfd[1] - 1);
-    // bookedFromDate.setFullYear(splitBfd[2]);
-    // const splitTfd = booking.bookedDateTo.split('/');
-    // const bookedToDate = new Date();
-    // bookedToDate.setDate(splitTfd[0]);
-    // bookedToDate.setMonth(splitTfd[1] - 1);
-    // bookedToDate.setFullYear(splitTfd[2]);
+    const splitBfd = booking.bookedDateFrom.split('/');
+    const bookedFromDate = new Date();
+    bookedFromDate.setDate(splitBfd[0]);
+    bookedFromDate.setMonth(splitBfd[1] - 1);
+    bookedFromDate.setFullYear(splitBfd[2]);
+    const splitTfd = booking.bookedDateTo.split('/');
+    const bookedToDate = new Date();
+    bookedToDate.setDate(splitTfd[0]);
+    bookedToDate.setMonth(splitTfd[1] - 1);
+    bookedToDate.setFullYear(splitTfd[2]);
     // this.dateTimeForm.get('bookingDateFrom').setValue(bookedFromDate);
     // this.dateTimeForm.get('bookingDateTo').setValue(bookedToDate);
-    // this.editTimeFrom = booking.bookedTimeFrom;
-    // this.editTimeTo = booking.bookedTimeTo;
-    // this.eventName = booking.meetingName;
-    // this.showMap = true;
-    // this.showRoomDetails(booking.conferenceId - 1);
-
-    this.isEditing = true;
-    alert(booking.conferenceId);
+    this.selectedRowForEdit = booking.id;
     this.editBookingForm.get('editRoomName').setValue(booking.conferenceId);
     this.editBookingForm.get('editMeetingName').setValue(booking.meetingName);
-    this.editBookingForm.get('editFromDate').setValue(booking.bookedDateFrom);
-    this.editBookingForm.get('editToDate').setValue(booking.bookedDateTo);
+    this.editBookingForm.get('editFromDate').setValue(bookedFromDate);
+    this.editBookingForm.get('editToDate').setValue(bookedToDate);
+    this.editBookingForm.get('editFromTime').setValue(booking.bookedTimeFrom);
+    this.editBookingForm.get('editToTime').setValue(booking.bookedTimeTo);
+    this.editBookingForm.markAsPristine();
   }
 
-  checkAvailability(editBookingForm){    
-    this.selectedRoom = this.rooms[parseInt(this.editBookingItem.conferenceId) -1];
+  checkAvailability(editBookingForm){
+    this.showAvailability = this.editBookingForm.controls.editRoomName.value;
+    this.selectedRoom = this.rooms[parseInt(this.editBookingForm.controls.editRoomName.value) - 1];
     let editfromDate = editBookingForm.controls.editFromDate.value.toLocaleDateString('en-GB');
     let edittoDate = editBookingForm.controls.editToDate.value.toLocaleDateString('en-GB');
-    this.getBookings(this.selectedRoom,editfromDate,edittoDate);
+    this.getBookings(this.selectedRoom, editfromDate, edittoDate);
+  }
+
+  saveEditedForm(id, conferenceId, editBookingForm){
+    this.isAccordianOpen = false;
+    this.isLoading = true;
+    const editBookingFormData = {
+      'conferenceId': parseInt(editBookingForm.editRoomName, 10),
+      'bookedBy': localStorage.getItem('loggedInUser'),
+      'meetingName': editBookingForm.editMeetingName,
+      'bookedDateFrom': editBookingForm.editFromDate.toLocaleDateString('en-GB'),
+      'bookedDateTo': editBookingForm.editToDate.toLocaleDateString('en-GB'),
+      'bookedTimeFrom': editBookingForm.editFromTime,
+      'bookedTimeTo': editBookingForm.editToTime
+    };
+
+    this.roomListService.addBooking(editBookingForm.editRoomName, editBookingFormData).subscribe(
+      data => {
+        this.isLoading = false;
+        this.selectedRowForEdit = '';
+        const roomStatus = {
+          'roomStatus': 'booked'
+        };
+        this.deleteItem(id, conferenceId);
+        this.roomListService.updateRoomStatus(editBookingForm.editRoomName, roomStatus).subscribe(
+          updateData => {
+            this.getPreviousBookings(localStorage.getItem('loggedInUser'));
+            this.showSuccess(editBookingFormData);
+          }
+        );
+      }
+    );
+    this.editBookingForm.markAsPristine();
+
+  }
+
+  showDeleteSuccess() {
+    this.toastr.warning('Deleted selected entry from your bookings!', 'Deleted',
+      { positionClass: 'toast-top-full-width', closeButton: true, timeOut: 5000 });
+  }
+
+  showSuccess(postData) {
+    this.toastr.success(
+      `Details have been updated`, 'Edit Successful!',
+      { positionClass: 'toast-top-full-width', closeButton: true, timeOut: 5000 }
+    );
   }
 
   // bookConference() {
@@ -388,6 +457,157 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.myBookingsTab = true;
     this.bookNow = false;
     this.myBookings = true;
+  }
+
+  timeChanged(fromTime, toTime) {
+    this.fromTimeError = '';
+    this.toTimeError = '';
+
+    const fromTimeDay = new Date(fromTime);
+    const fromTimeHour = fromTimeDay.getHours();
+    const fromTimeMinutes = fromTimeDay.getMinutes();
+
+    const toTimeDay = new Date(toTime);
+    const toTimeHour = toTimeDay.getHours();
+    const toTimeMinutes = toTimeDay.getMinutes();
+
+    if (fromTimeHour > toTimeHour) {
+      this.fromTimeError = 'From time can not be more than or equal To Time';
+    } else if (fromTimeHour === toTimeHour && fromTimeMinutes >= toTimeMinutes) {
+      this.fromTimeError = 'From time can not be more than or equal To Time';
+    }
+
+    let isRoomBooked = false;
+
+    for (const booking of this.dateWiseBookings) {
+      // if (booking.bookedBy === localStorage.getItem('loggedInUser')){
+      //   alert('bookedByAdmin');
+      // }
+      const bookingFromTimeDay = new Date(booking.bookedTimeFrom);
+      const bookingFromTimeHour = bookingFromTimeDay.getHours();
+      const bookingFromTimeMinutes = bookingFromTimeDay.getMinutes();
+
+      const bookingToTimeDay = new Date(booking.bookedTimeTo);
+      const bookingToTimeHour = bookingToTimeDay.getHours();
+      const bookingToTimeMinutes = bookingToTimeDay.getMinutes();
+
+      if (fromTimeHour === bookingFromTimeHour && fromTimeMinutes === bookingFromTimeMinutes) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'From time can not be same as booked from time';
+          isRoomBooked = true;
+        }
+      } else if (toTimeHour === bookingToTimeHour && toTimeMinutes === bookingToTimeMinutes) {
+        if (isRoomBooked === false) {
+          this.toTimeError = 'To time can not be same as booked to time';
+          isRoomBooked = true;
+        }
+      }
+
+      if (fromTimeHour < (bookingFromTimeHour && bookingToTimeHour) &&
+        toTimeHour > (bookingFromTimeHour && bookingToTimeHour)
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (fromTimeHour < (bookingFromTimeHour && bookingToTimeHour) &&
+        (
+          (toTimeHour === bookingFromTimeHour) &&
+          (toTimeHour === bookingToTimeHour && toTimeMinutes >= bookingToTimeMinutes)
+        )
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (fromTimeHour < (bookingFromTimeHour && bookingToTimeHour) &&
+        (
+          (toTimeHour === bookingFromTimeHour && toTimeMinutes > bookingFromTimeMinutes) &&
+          (toTimeHour === bookingToTimeHour && toTimeMinutes < bookingToTimeMinutes)
+        )
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour &&
+        (fromTimeMinutes < bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes && toTimeMinutes > bookingFromTimeMinutes
+          && toTimeMinutes < bookingToTimeMinutes)
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour &&
+        (fromTimeMinutes < bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes && toTimeMinutes > bookingFromTimeMinutes
+          && toTimeMinutes > bookingToTimeMinutes)
+      ) {
+        if (isRoomBooked === false) {
+          this.fromTimeError = 'Selected date includes already booked date range';
+          isRoomBooked = true;
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour
+      ) {
+        if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
+          if (toTimeMinutes > bookingFromTimeMinutes && toTimeMinutes < bookingToTimeMinutes) {
+            if (isRoomBooked === false) {
+              this.fromTimeError = 'Selected date includes already booked date range';
+              isRoomBooked = true;
+            }
+          }
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour === bookingToTimeHour
+      ) {
+        if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
+          if (toTimeMinutes > bookingFromTimeMinutes && toTimeMinutes > bookingToTimeMinutes) {
+            if (isRoomBooked === false) {
+              this.fromTimeError = 'Selected date includes already booked date range';
+              isRoomBooked = true;
+            }
+          }
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour > bookingToTimeHour
+      ) {
+        if (fromTimeMinutes > bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
+          if (isRoomBooked === false) {
+            this.fromTimeError = 'Selected date includes already booked date range';
+            isRoomBooked = true;
+          }
+        }
+      }
+
+      if (
+        fromTimeHour === bookingFromTimeHour && toTimeHour > bookingToTimeHour
+      ) {
+        if (fromTimeMinutes < bookingFromTimeMinutes && fromTimeMinutes < bookingToTimeMinutes) {
+          if (isRoomBooked === false) {
+            this.fromTimeError = 'Selected date includes already booked date range';
+            isRoomBooked = true;
+          }
+        }
+      }
+
+    }
+
   }
 
 }

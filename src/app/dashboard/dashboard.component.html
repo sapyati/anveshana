@@ -18,87 +18,130 @@
 <!-- dashboard component -->
 <div class="content" style="margin-top: 50px; padding-bottom: 50px;">
   <div class="container-fluid">
-
-    <accordion class="z-depth-2" *ngIf="previousBookings.length">
-      <accordion-group heading="My Bookings" [isOpen]="isAccordianOpen" @fade>
+    <div class="panel panel-default z-depth-2" *ngIf="previousBookings.length">
+      <div class="panel-heading" (click)="isAccordianOpen = !isAccordianOpen; selectedRowForEdit = '';editBookingForm.markAsPristine();">
+        <h3 class="panel-title">My Bookings <i style="font-weight: normal" class="fa" [ngClass]="{'fa-caret-down': isAccordianOpen, 'fa-caret-up': !isAccordianOpen }"></i></h3>
+      </div>
+      <div class="panel-body" *ngIf="isAccordianOpen">
         <form [formGroup]="editBookingForm" (ngSubmit)="checkAvailability(editBookingForm)">
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Meeting / Conference Room</th>
-                <th>Event Name</th>
-                <th>Date From</th>
-                <th>Date To</th>
-                <th>Time</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody @fade>
-              <tr *ngFor="let booking of previousBookings; let i = index">
-                <td>{{ i+1 }}</td>
-                <td>
-                  <div *ngIf="!isEditing">
-                    {{ getRoomNameById(booking.conferenceId) }}
-                  </div>
-                  <div *ngIf="isEditing">
-                    <select name="" id="" class="form-control" formControlName="editRoomName">
-                      <option *ngFor="let room of rooms" [value]="room.id" >{{room.roomName}}</option>
-                    </select>
-                  </div>
-                </td>
-                <td>
-                  <div *ngIf="!isEditing">
-                      {{ booking.meetingName }}
-                  </div>
-                  <div *ngIf="isEditing">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Meeting / Conference Room</th>
+                  <th>Event Name</th>
+                  <th>Date From</th>
+                  <th>Date To</th>
+                  <th><span *ngIf="!selectedRowForEdit">Time</span></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody @fade>
+                <ng-container *ngFor="let booking of previousBookings; let i = index">
+                  <tr *ngIf="selectedRowForEdit !== booking.id">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ getRoomNameById(booking.conferenceId) }}</td>
+                    <td>{{ booking.meetingName }}</td>
+                    <td>{{booking.bookedDateFrom}}</td>
+                    <td style="width:228px">{{booking.bookedDateTo}}</td>
+                    <td style="width:228px">{{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}</td>
+                    <td>
+                      <a href="javascript:;" class="btn btn-primary btn-xs" (click)="editDate(booking)">
+                        <i class="fa fa-edit"></i>
+                        Edit
+                      </a>
+                      <a href="javascript:;" class="btn btn-danger btn-xs pull-right" (click)="deleteItem(booking.id, booking.conferenceId)">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="selectedRowForEdit === booking.id" style="border-bottom: none" [ngClass]="{'editing': editBookingForm.controls.editRoomName.value === showAvailability}">
+                    <td>{{ i+1 }}</td>
+                    <td>
+                      <select name="" id="" class="form-control" formControlName="editRoomName">
+                        <option *ngFor="let room of rooms" [value]="room.id">{{room.roomName}}</option>
+                      </select>
+                    </td>
+                    <td>
                       <input type="text" class="form-control" value="" formControlName="editMeetingName" />
-                  </div>
-                </td>
-                <td>
-                    <div *ngIf="!isEditing">
-                        {{booking.bookedDateFrom}}
-                    </div>
-                    <div *ngIf="isEditing">
-                        <input class="form-control" placeholder="From Date" 
-                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="fromMinDate"
-                [maxDate]="fromMaxDate" (bsValueChange)="fromDateChanged($event)" formControlName="editFromDate">
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="!isEditing">
-                        {{booking.bookedDateTo}}
-                    </div>
-                    <div *ngIf="isEditing">
-                        <input class="form-control" placeholder="To Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }" [minDate]="toMinDate"
-                [maxDate]="toMaxDate" (bsValueChange)="toDateChanged($event)" formControlName="editToDate">
-
-                <button class="btn btn-success" id="chkAvailable">Check Availability</button>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="!isEditing">
-                        {{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}
-                    </div>                    
-                </td>
-                <td>
-                  <a href="javascript:;" class="btn btn-primary btn-xs" (click)="editDate(booking)"><i class="fa fa-edit"></i>
-                    Edit</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs pull-right" (click)="deleteItem(booking.id, booking.conferenceId)"><i
-                      class="fa fa-trash"></i> Delete</a>
-                </td>
-              </tr>
-              <tr @fade>
-                <td colspan="7" *ngIf="!previousBookings.length" class="text-center">There are no records to display</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        {{dateWiseBookings | json}}
-      </form>
-      </accordion-group>
-    </accordion>
+                    </td>
+                    <td>
+                      <input class="form-control" placeholder="From Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }"
+                        [minDate]="fromMinDate" [maxDate]="fromMaxDate" (bsValueChange)="fromDateChanged($event)"
+                        formControlName="editFromDate">
+                    </td>
+                    <td>
+                      <input class="form-control" placeholder="To Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }"
+                        [minDate]="toMinDate" [maxDate]="toMaxDate" (bsValueChange)="toDateChanged($event)" formControlName="editToDate">
+                    </td>
+                    <td>
+                      <button class="btn btn-link" id="chkAvailable">Check Availability</button>
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="btn btn-block btn-danger" (click)="selectedRowForEdit = '';editBookingForm.markAsPristine();">
+                        <i class="fa fa-trash"></i>
+                        Cancel
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="selectedRowForEdit === booking.id && editBookingForm.controls.editRoomName.value === showAvailability" style="border-top: none" [ngClass]="{'editing': editBookingForm.controls.editRoomName.value === showAvailability}">
+                    <td colspan="4" *ngIf="selectedRowForEdit === booking.id">
+                      <table class="table table-condensed">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Booked By</th>
+                            <th>Event Name</th>
+                            <th>Booked Date</th>
+                            <th>Booked Time</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let booking of dateWiseBookings; let i = index">
+                            <td>{{ i + 1}}</td>
+                            <td>{{booking.bookedBy}}</td>
+                            <td>{{booking.meetingName}}</td>
+                            <td>{{booking.bookedDateFrom}} to {{booking.bookedDateTo}}</td>
+                            <td>{{booking.bookedTimeFrom | date: 'h:mm a'}} to {{booking.bookedTimeTo | date: 'h:mm a'}}</td>
+                          </tr>
+                          <tr *ngIf="dateWiseBookings.length === 0">
+                            <td colspan="5">
+                              <p class="text-center">There are no bookings on this date.</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td style="word-wrap:break-word" *ngIf="selectedRowForEdit === booking.id && editBookingForm.controls.editRoomName.value === showAvailability">
+                      <label for="meetingName">Select From Time</label>
+                      <timepicker [showMeridian]="ismeridian" formControlName="editFromTime" (ngModelChange)="timeChanged($event, editBookingForm.controls['editToTime'].value)"></timepicker>
+                      <span class="help-block" *ngIf="fromTimeError">
+                        {{fromTimeError}}
+                      </span>
+                    </td>
+                    <td style="word-wrap:break-word" *ngIf="selectedRowForEdit === booking.id && editBookingForm.controls.editRoomName.value === showAvailability">
+                      <label for="meetingName">Select To Time</label>
+                      <timepicker [showMeridian]="ismeridian" formControlName="editToTime" (ngModelChange)="timeChanged(editBookingForm.controls['editFromTime'].value, $event)"></timepicker>
+                      <span class="help-block" *ngIf="toTimeError">
+                        {{toTimeError}}
+                      </span>
+                    </td>
+                    <td *ngIf="selectedRowForEdit === booking.id && editBookingForm.controls.editRoomName.value === showAvailability">
+                      <button [disabled]="!editBookingForm.dirty || fromTimeError || toTimeError"  href="javascript:;" class="btn btn-block btn-success" (click)="saveEditedForm(booking.id, booking.conferenceId, editBookingForm.value)">
+                        <i class="fa fa-check-circle"></i>
+                        Save
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -127,7 +170,7 @@
     </div>
     
     <!-- svg section -->
-    <div class="row" *ngIf="showMap" id="room-details-booking" @fade>
+    <div class="row" *ngIf="showMap && !this.selectedRowForEdit" id="room-details-booking" @fade>
       <div class="col-md-6" *ngIf="rooms && dateTimeForm.valid">
         <div class="c-box c-box-map">
           <div class="c-box__title">
@@ -3858,5 +3901,13 @@
 <div class="c-footer">
   <div class="container clearfix">
     <p class="c-footer__copy-text">Mphasis | All rights reserved</p>
+  </div>
+</div>
+
+<div class="overlay" @fade *ngIf="isLoading" >
+  <div class="loader z-depth-3">
+    <div class="span">
+      <div class="square"></div>
+    </div>
   </div>
 </div>

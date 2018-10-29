@@ -33,7 +33,9 @@
 }
 
 .content {
-  background-color: #183d54;
+  background-color: #fff;
+  background-image: url('../../assets/images/background-image.png');
+  background-size: cover;
   height: calc(100vh - 100px);
   padding-top: 75px;
 }

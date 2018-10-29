@@ -32,7 +32,7 @@
   <!-- meeting/conference name -->
   <div class="form-group" [ngClass]="{'has-error': !rForm.controls['meetingName'].valid && rForm.controls['meetingName'].touched}">
     <label for="meetingName">Event Name</label>
-    <input type="text" class="form-control" id="meetingName" placeholder="Event Name" formControlName="meetingName">
+    <input type="text" class="form-control" id="meetingName" placeholder="Event Name" formControlName="meetingName" (keyup)="timeChanged(rForm.controls['bookedTimeFrom'].value, rForm.controls['bookedTimeTo'].value)">
     <span class="help-block" *ngIf="!rForm.controls['meetingName'].valid
                 && rForm.controls['meetingName'].touched && !rForm.controls['meetingName'].errors?.minlength">
       This field is required

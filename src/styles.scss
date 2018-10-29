@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800');
+// @import url('https://fonts.googleapis.com/css?family=Bai+Jamjuree:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i');
 @import '~ngx-toastr/toastr.css';
 *{
   margin: 0;
@@ -19,6 +20,7 @@ body {
 
 body, html {
   font-family: 'Raleway', sans-serif;
+  // font-family: 'Bai Jamjuree', sans-serif;
 }
 
 .clearfix:after {
@@ -72,25 +74,30 @@ timepicker table {
 
 .panel {
   border: none;
-  box-shadow: none;
+  border-radius: 0px !important;
 }
 
-.panel-heading {
-  padding: 5px 0px;
+.panel-heading, .panel-body {
+  border-radius: none;
 }
 
-.panel .btn-link {
-  outline: none;
-  color: #94C85C;
-  font-weight: 700;
+.panel-heading h3 {
   font-size: 16px;
+  font-weight: bold;
 }
 
-.panel .btn-link:hover, .panel .btn-link:focus, .panel .btn-link:active, .panel .btn-link:link {
-  outline: none;
-  color: #94C85C;
-  text-decoration: none;
-}
+// .panel .btn-link {
+//   outline: none;
+//   color: #94C85C;
+//   font-weight: 700;
+//   font-size: 16px;
+// }
+
+// .panel .btn-link:hover, .panel .btn-link:focus, .panel .btn-link:active, .panel .btn-link:link {
+//   outline: none;
+//   color: #94C85C;
+//   text-decoration: none;
+// }
 
 .panel-body {
   padding: 0px;
@@ -99,4 +106,84 @@ timepicker table {
 
 .table {
   margin-bottom: 0px;
+}
+
+tr.editing {
+  border: 3px solid #9FCA4B;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: rgba(0,0,0,0.5);
+  // display: none;
+  .loader {
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    background: #48A9D8;
+    transform: translate(-50%, -50%);
+    border: 1px solid #fff;
+    border-radius: 4px;
+  }
+}
+
+/*square*/
+.square{
+    width: 20px;
+    height: 20px;
+    border:1px  rgba(255,255,255,1) solid;
+    margin: 36px auto;
+    position: relative;
+    -webkit-animation: fill_color 5s linear infinite;
+       -moz-animation: fill_color 5s linear infinite;
+            animation: fill_color 5s linear infinite;
+}
+.square:after{
+    width: 4px;
+    height: 4px;
+    position: absolute;
+    content: "";
+    background-color: rgba(255,255,255,1);
+    top: -8px;
+    left: 0px;
+    -webkit-animation: square_check 1s ease-in-out infinite;
+       -moz-animation: square_check 1s ease-in-out infinite;
+            animation: square_check 1s ease-in-out infinite;
+}
+
+@-webkit-keyframes square_check{
+    25%{ left: 22px; top: -8px;}
+    50%{ left: 22px; top: 22px;}
+    75%{ left: -9px; top: 22px;}
+    100%{ left: -9px; top: -7px;}
+}
+@-moz-keyframes square_check{
+    25%{ left: 22px; top: -8px;}
+    50%{ left: 22px; top: 22px;}
+    75%{ left: -9px; top: 22px;}
+    100%{ left: -9px; top: -7px;}
+}
+@keyframes square_check{
+    25%{ left: 22px; top: -8px;}
+    50%{ left: 22px; top: 22px;}
+    75%{ left: -9px; top: 22px;}
+    100%{ left: -9px; top: -7px;}
+}
+@-webkit-keyframes fill_color{
+    0%{ box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,0.1);}
+    100%{ box-shadow: inset 0px -20px 0px 0px rgba(255,255,255,1);}
+}
+@-moz-keyframes fill_color{
+    0%{ box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,0.1);}
+    100%{ box-shadow: inset 0px -20px 0px 0px rgba(255,255,255,1);}
+}
+@keyframes fill_color{
+    0%{ box-shadow: inset 0px 0px 0px 0px rgba(255,255,255,0.1);}
+    100%{ box-shadow: inset 0px -20px 0px 0px rgba(255,255,255,1);}
 }

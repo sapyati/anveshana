@@ -111,7 +111,7 @@ export class BookingFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // bookedTimeFrom
 
-  timeChanged(fromTime, toTime){
+  timeChanged(fromTime, toTime) {
     this.fromTimeError = '';
     this.toTimeError = '';
 
